@@ -1,0 +1,28 @@
+{
+  "name": "mielk-fn",
+  "version": "1.0.0",
+  "description": "Set of helpful functions",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mielk/mielk-fn.git"
+  },
+  "author": "Tomasz Mielniczek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mielk/mielk-fn/issues"
+  },
+  "homepage": "https://github.com/mielk/mielk-fn#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.21.5",
+    "babel-jest": "^29.5.0",
+    "jest": "^29.5.0"
+  }
+}
