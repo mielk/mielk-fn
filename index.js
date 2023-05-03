@@ -1,4 +1,5 @@
-import arrays from './methods/arrays.js';
-import objects from './methods/objects.js';
+import arrays from './lib/arrays.js';
+import objects from './lib/objects.js';
+import routing from './lib/routing.js';
 
-export { arrays, objects };
+export { arrays, objects, routing };
