@@ -1,5 +1,45 @@
 {
     "objects": {
+        "invert": {
+            "summary": "Swaps keys and values for a given JavaScript object.",
+            "signature": "function invert(obj: Record<string | number, string | number>): Record<string | number, string | number>",
+            "parameters": [
+                {
+                    "name": "obj",
+                    "type": "Record<string | number, string | number>",
+                    "description": "The object for which keys and values should be swapped."
+                }
+            ],
+            "returns": {
+                "type": "Record<string | number, string | number>",
+                "description": "Returns a new object with the keys and values of the input object swapped."
+            },
+            "restrictions": [
+                "The input object must have keys and values of type string or number."
+            ],
+            "examples": [
+                [
+                    "const input = { key1: <span class=\"string\">'value1'</span>, key2: <span class=\"string\">'value2'</span> };",
+                    "const result = <span class=\"function\">invert</span>(input);",
+                    "console.log(result); <span class=\"comment\">// Output: { value1: 'key1', value2: 'key2' }</span>"
+                ],
+                [
+                    "const input = { [<span class=\"number\">1</span>]: <span class=\"number\">2</span>, [<span class=\"number\">3</span>]: <span class=\"number\">4</span> };",
+                    "const result = <span class=\"function\">invert</span>(input);",
+                    "console.log(result); <span class=\"comment\">// Output: { 2: '1', 4: '3' }</span>"
+                ],
+                [
+                    "const input = { key1: <span class=\"number\">1</span>, [<span class=\"number\">2</span>]: <span class=\"string\">'value2'</span> };",
+                    "const result = <span class=\"function\">invert</span>(input);",
+                    "console.log(result); <span class=\"comment\">// Output: { 1: 'key1', value2: '2' }</span>"
+                ],
+                [
+                    "const input = {};",
+                    "const result = <span class=\"function\">invert</span>(input);",
+                    "console.log(result); <span class=\"comment\">// Output: {}</span>"
+                ]
+            ]
+        },
         "isObject": {
             "summary": "Determines if the given value is an object, excluding arrays and null values.",
             "signature": "function isObject(value: unknown): boolean",
@@ -25,6 +65,115 @@
                 ],
                 [
                     "console.log(<span class=\"function\">isObject</span>(<span class=\"keyword\">null</span>)); <span class=\"comment\">// Output: false</span>"
+                ]
+            ]
+        },
+        "merge": {
+            "summary": "Merges two or more objects and returns an object that has properties of all those input objects.",
+            "signature": "function merge(objects: AnyObject[], override: boolean = false): AnyObject",
+            "parameters": [
+                {
+                    "name": "objects",
+                    "type": "AnyObject[]",
+                    "description": "An array of JavaScript objects to be merged."
+                },
+                {
+                    "name": "override",
+                    "type": "boolean",
+                    "description": "An optional parameter that determines which value should be assigned to the returned object if there is a conflict (more than one input objects have the same property). If this value is set to true, the last found value of the given property will be assigned to the returned object, otherwise the first found value."
+                }
+            ],
+            "returns": {
+                "type": "AnyObject",
+                "description": "Returns an object that has properties of all the input objects, merged according to the 'override' parameter."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3 };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key.toUpperCase();",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback);",
+                    "console.log(result); <span class=\"comment\">// Output: { A: 1, B: 2, C: 3 }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3 };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key + '_new';",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback);",
+                    "console.log(result); <span class=\"comment\">// Output: { a_new: 1, b_new: 2, c_new: 3 }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { 1: 'a', 2: 'b', 3: 'c' };",
+                    "<span class=\"keyword\">const</span> callback = (key) => parseInt(key) + 1;",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback);",
+                    "console.log(result); <span class=\"comment\">// Output: { 2: 'a', 3: 'b', 4: 'c' }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3 };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key;",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback, false);",
+                    "console.log(result); <span class=\"comment\">// Output: { a: 1, b: 2, c: 3 }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3, 1: 'd' };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key;",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback, true);",
+                    "console.log(result); <span class=\"comment\">// Output: { a: 1, b: 2, c: 3 }</span>"
+                ]
+            ]
+        },
+        "modifyKeys": {
+            "name": "modifyKeys",
+            "description": "Modifies an object's keys based on a callback function.",
+            "params": [
+                {
+                    "name": "obj",
+                    "type": "Object",
+                    "description": "The object to modify the keys for."
+                },
+                {
+                    "name": "callback",
+                    "type": "Function",
+                    "description": "The callback function to determine the new keys for each object."
+                },
+                {
+                    "name": "ignoreDuplicates",
+                    "type": "boolean",
+                    "description": "An optional boolean value that determines whether to ignore objects with duplicate keys. Defaults to `true`."
+                }
+            ],
+            "returns": {
+                "type": "Object",
+                "description": "The modified object with new keys."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3 };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key.toUpperCase();",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback);",
+                    "console.log(result); <span class=\"comment\">// Output: { A: 1, B: 2, C: 3 }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3 };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key + '_new';",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback);",
+                    "console.log(result); <span class=\"comment\">// Output: { a_new: 1, b_new: 2, c_new: 3 }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { 1: 'a', 2: 'b', 3: 'c' };",
+                    "<span class=\"keyword\">const</span> callback = (key) => parseInt(key) + 1;",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback);",
+                    "console.log(result); <span class=\"comment\">// Output: { 2: 'a', 3: 'b', 4: 'c' }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3 };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key;",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback, false);",
+                    "console.log(result); <span class=\"comment\">// Output: { a: 1, b: 2, c: 3 }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> obj = { a: 1, b: 2, c: 3, 1: 'd' };",
+                    "<span class=\"keyword\">const</span> callback = (key) => key;",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">modifyKeys</span>(obj, callback, true);",
+                    "console.log(result); <span class=\"comment\">// Output: { a: 1, b: 2, c: 3 }</span>"
                 ]
             ]
         }

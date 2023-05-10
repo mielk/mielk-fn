@@ -1,0 +1,93 @@
+{
+    "arrays": {
+        "toIndexedArray": {
+            "summary": "Creates a new array where items are placed at their corresponding indices determined by a callback function.",
+            "signature": "const toIndexedArray = (items: any[], callback: CallbackFunction): any[]",
+            "parameters": [
+                {
+                    "name": "items",
+                    "type": "any[]",
+                    "description": "The input array of items to be indexed."
+                },
+                {
+                    "name": "callback",
+                    "type": "CallbackFunction",
+                    "description": "The function that determines the index at which each item should be placed in the resulting array."
+                }
+            ],
+            "returns": {
+                "type": "any[]",
+                "description": "A new array where items are placed at their corresponding indices, as determined by the callback function."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> items = [ { name: <span class=\"string\">'Adam'</span>, id: <span class=\"number\">1</span> }, { name: <span class=\"string\">'Bartek'</span>, id: <span class=\"number\">4</span> }, { name: <span class=\"string\">'Czesiek'</span>, id: <span class=\"number\">5</span> }];",
+                    "<span class=\"keyword\">const</span> callback = (item) => item.id;",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">toIndexedArray</span>(items, callback);",
+                    "<span class=\"comment\">// result: [ { name: 'Adam', id: 1 }, , , { name: 'Bartek', id: 4 }, { name: 'Czesiek', id: 5 } ]</span>"
+                ],
+                [
+                    "<span class=\"keyword\">class</span> Person {",
+                    "  <span class=\"keyword\">constructor</span>(public name: <span class=\"keyword\">string</span>, public age: <span class=\"keyword\">number</span>) {}",
+                    "  <span class=\"function\">getAge</span>() { <span class=\"keyword\">return</span> <span class=\"keyword\">this</span>.age; }",
+                    "}",
+                    "<span class=\"keyword\">const</span> people = [<span class=\"keyword\">new</span> Person(<span class=\"string\">'John'</span>, <span class=\"number\">20</span>), <span class=\"keyword\">new</span> Person(<span class=\"string\">'Jane'</span>, <span class=\"number\">25</span>), <span class=\"keyword\">new</span> Person(<span class=\"string\">'Alice'</span>, <span class=\"number\">30</span>)];",
+                    "<span class=\"keyword\">const</span> callback = (person) => person.<span class=\"function\">getAge</span>();",
+                    "<span class=\"keyword\">const</span> result = <span class=\"function\">toIndexedArray</span>(people, callback);",
+                    "<span class=\"comment\">// result: [ , { name: 'John', age: 20 }, , , { name: 'Jane', age: 25 }, { name: 'Alice', age: 30 } ]</span>"
+                ]
+            ]
+        },
+        "toMap": {
+            "summary": "Converts an array of items into a Map object, using a key callback function to determine the keys and an optional value function to determine the values.",
+            "signature": "function toMap(items: any[], keyCallback: StringNumberFunction, valueFn: ValueFunction = (item) => item, ignoreDuplicates = true): Map<any, any>",
+            "parameters": [
+                {
+                    "name": "items",
+                    "type": "any[]",
+                    "description": "The array of items to convert to a Map."
+                },
+                {
+                    "name": "keyCallback",
+                    "type": "StringNumberFunction",
+                    "description": "A callback function that accepts an item and returns a string or number that will be used as the key in the Map."
+                },
+                {
+                    "name": "valueFn",
+                    "type": "ValueFunction",
+                    "description": "An optional callback function that accepts an item and returns the value to be associated with the key in the Map. Defaults to the item itself."
+                },
+                {
+                    "name": "ignoreDuplicates",
+                    "type": "boolean",
+                    "description": "An optional boolean value that determines whether to ignore items with duplicate keys. Defaults to `true`."
+                }
+            ],
+            "returns": {
+                "type": "Map<any, any>",
+                "description": "Returns a new Map object containing the key-value pairs."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> items = [<span class=\"json\">{</span> id: <span class=\"number\">1</span>, name: <span class=\"string\">'John'</span> }, <span class=\"json\">{</span> id: <span class=\"number\">2</span>, name: <span class=\"string\">'Jane'</span> }, <span class=\"json\">{</span> id: <span class=\"number\">3</span>, name: <span class=\"string\">'Bob'</span> }];",
+                    "<span class=\"keyword\">const</span> keyCallback = (item) => item.id;",
+                    "<span class=\"keyword\">const</span> map = <span class=\"function\">toMap</span>(items, keyCallback);",
+                    "console.log(map); <span class=\"comment\">// Output: Map(3) { 1 => { id: 1, name: 'John' }, 2 => { id: 2, name: 'Jane' }, 3 => { id: 3, name: 'Bob' } }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> items = [<span class=\"json\">{</span> id: <span class=\"number\">1</span>, name: <span class=\"string\">'John'</span> }, <span class=\"json\">{</span> id: <span class=\"number\">2</span>, name: <span class=\"string\">'Jane'</span> }, <span class=\"json\">{</span> id: <span class=\"number\">3</span>, name: <span class=\"string\">'Bob'</span> }];",
+                    "<span class=\"keyword\">const</span> keyCallback = (item) => item.name;",
+                    "<span class=\"keyword\">const</span> valueFn = (item) => item.id;",
+                    "<span class=\"keyword\">const</span> map = <span class=\"function\">toMap</span>(items, keyCallback, valueFn);",
+                    "console.log(map); <span class=\"comment\">// Output: Map(3) { 'John' => 1, 'Jane' => 2, 'Bob' => 3 }</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> items = [<span class=\"json\">{</span> id: <span class=\"number\">1</span>, name: <span class=\"string\">'John'</span> }, <span class=\"json\">{</span> id: <span class=\"number\">2</span>, name: <span class=\"string\">'Jane'</span> }, <span class=\"json\">{</span> id: <span class=\"number\">2</span>, name: <span class=\"string\">'Bob'</span> }];",
+                    "<span class=\"keyword\">const</span> keyCallback = (item) => item.id;",
+                    "<span class=\"keyword\">const</span> map = <span class=\"function\">toMap</span>(items, keyCallback, undefined, false);",
+                    "console.log(map); <span class=\"comment\">// Output: Map(2) { 1 => { id: 1, name: 'John' }, 2 => { id: 2, name: 'Bob' } }</span>"
+                ]
+            ]
+        }
+    }
+}
