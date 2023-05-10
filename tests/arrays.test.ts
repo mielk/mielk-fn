@@ -1,4 +1,4 @@
-import arrays from '../../utils/arrays';
+const arrays = require('../lib/arrays');
 
 describe('toMap', () => {});
 
