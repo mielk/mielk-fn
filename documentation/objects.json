@@ -1,0 +1,32 @@
+{
+    "objects": {
+        "isObject": {
+            "summary": "Determines if the given value is an object, excluding arrays and null values.",
+            "signature": "function isObject(value: unknown): boolean",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "unknown",
+                    "description": "The value to be checked for being an object."
+                }
+            ],
+            "returns": {
+                "type": "boolean",
+                "description": "Returns <code>true</code> if the input value is an object (excluding arrays and null values), and <code>false</code> otherwise."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> obj = { key: <span class=\"string\">'value'</span> };",
+                    "console.log(<span class=\"function\">isObject</span>(obj)); <span class=\"comment\">// Output: true</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> arr = [<span class=\"number\">1</span>, <span class=\"number\">2</span>, <span class=\"number\">3</span>];",
+                    "console.log(<span class=\"function\">isObject</span>(arr)); <span class=\"comment\">// Output: false</span>"
+                ],
+                [
+                    "console.log(<span class=\"function\">isObject</span>(<span class=\"keyword\">null</span>)); <span class=\"comment\">// Output: false</span>"
+                ]
+            ]
+        }
+    }
+}
