@@ -26,6 +26,7 @@
     "@types/node": "^20.1.2",
     "babel-jest": "^29.5.0",
     "jest": "^29.5.0",
+    "jest-html-reporters": "^3.1.4",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
   },
@@ -45,6 +46,22 @@
       "ts-jest": {
         "tsconfig": "tsconfig.json"
       }
-    }
+    },
+    "reporters": [
+      "default",
+      [
+        "jest-html-reporters",
+        {
+          "publicPath": "./reports/html-report",
+          "filename": "report.html",
+          "pageTitle": "My Project - Test Report",
+          "expand": true,
+          "openReport": true,
+          "groupBy": [
+            "describe"
+          ]
+        }
+      ]
+    ]
   }
 }
