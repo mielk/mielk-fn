@@ -68,6 +68,46 @@
                 ]
             ]
         },
+        "isPlainObject": {
+            "summary": "Checks if a value is a plain JavaScript object.",
+            "signature": "(value: unknown) => boolean",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "unknown",
+                    "description": "The value to check."
+                }
+            ],
+            "returns": {
+                "type": "boolean",
+                "description": "Returns `true` if the value is a plain JavaScript object, `false` otherwise."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> obj = { id: 1, name: 'John' };",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(obj)); <span class=\"comment\">// Output: true</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> date = <span class=\"keyword\">new</span> <span class=\"class\">Date</span>();",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(date)); <span class=\"comment\">// Output: false</span>"
+                ],
+                [
+                    "<span class=\"keyword\">class</span> <span class=\"class\">Person</span> {",
+                    "  <span class=\"keyword\">constructor</span>(<span class=\"keyword\">public</span> name: <span class=\"keyword\">string</span>) {}",
+                    "}",
+                    "<span class=\"keyword\">const</span> person = <span class=\"keyword\">new</span> <span class=\"class\">Person</span>('Jane');",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(person)); <span class=\"comment\">// Output: false</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> user = { name: 'Alice', age: 25, isAdmin: <span class=\"literal\">false</span> };",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(user)); <span class=\"comment\">// Output: true</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> arr = [<span class=\"string\">'apple'</span>, <span class=\"string\">'banana'</span>, <span class=\"string\">'orange'</span>];",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(arr)); <span class=\"comment\">// Output: false</span>"
+                ]
+            ]
+        },
         "merge": {
             "summary": "Merges two or more objects and returns an object that has properties of all those input objects.",
             "signature": "function merge(objects: AnyObject[], override: boolean = false): AnyObject",
