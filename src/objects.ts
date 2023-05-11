@@ -1,7 +1,11 @@
+import { isDate } from 'util/types';
+
 type AnyObject = { [key: string]: any };
 type NumberStringFunction = (key: string, item: any) => number | string;
 
 const isObject = (value: unknown) => typeof value === 'object' && !Array.isArray(value) && value !== null;
+
+const isPlainObject = (value: unknown) => value?.constructor.name === 'Object';
 
 const merge = (objects: AnyObject[], override: boolean = false): AnyObject => {
 	const merged: AnyObject = {};
@@ -37,10 +41,17 @@ const invert = (
 };
 
 const modifyKeys = (obj: AnyObject, callback: NumberStringFunction, ignoreDuplicates = true) => {
-	if (!isObject(obj)) return undefined;
+	if (!isPlainObject(obj))
+		throw new TypeError(`Invalid type of ${obj?.constructor.name}. Expected JavaScript object`);
 	const entries = Object.entries(obj || {});
-	const modified = entries.map(([key, value]) => [callback(key, value), value]);
-	return Object.fromEntries(modified);
+	const result: AnyObject = {};
+	entries.forEach(([key, value]) => {
+		const newKey: string | number = callback(key, value);
+		if (!result.hasOwnProperty(newKey) || !ignoreDuplicates) {
+			result[newKey] = value;
+		}
+	});
+	return result;
 };
 
-export default { isObject, merge, invert, modifyKeys };
+export default { isObject, isPlainObject, merge, invert, modifyKeys };

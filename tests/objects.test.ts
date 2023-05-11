@@ -47,6 +47,27 @@ describe('isObject', () => {
 	});
 });
 
+describe('isPlainObject', () => {
+	const { isPlainObject } = objects;
+	it('should return true for plain JavaScript objects', () => {
+		expect(isPlainObject({})).toBe(true);
+		expect(isPlainObject({ key: 'value' })).toBe(true);
+	});
+
+	it('should return false for non-plain JavaScript objects', () => {
+		expect(isPlainObject([])).toBe(false);
+		expect(isPlainObject(new Date())).toBe(false);
+		expect(isPlainObject(null)).toBe(false);
+		expect(isPlainObject(undefined)).toBe(false);
+		expect(isPlainObject(123)).toBe(false);
+		expect(isPlainObject('string')).toBe(false);
+		expect(isPlainObject(true)).toBe(false);
+		expect(isPlainObject(() => {})).toBe(false);
+		class CustomClass {}
+		expect(isPlainObject(new CustomClass())).toBe(false);
+	});
+});
+
 describe('merge', () => {
 	const merge = objects.merge;
 	test('Empty array', () => {
@@ -153,16 +174,6 @@ describe('modifyKeys function', () => {
 			expect(result).toEqual({ '1_new': 'one', '2_new': 'two', '3_new': 'three' });
 		});
 
-		it('should handle a custom class instance as the input', () => {
-			class Person {
-				constructor(public name: string, public age: number) {}
-			}
-			const input = new Person('John', 30);
-			const callback: NumberStringFunction = (key) => key + '_new';
-			const result = modifyKeys(input, callback);
-			expect(result).toEqual({ name_new: 'John', age_new: 30 });
-		});
-
 		it('should modify the keys based on the callback function', () => {
 			const input = { id: 1, name: 'John', age: 30 };
 			const callback: NumberStringFunction = (key) => key + '_new';
@@ -200,7 +211,8 @@ describe('modifyKeys function', () => {
 		it('should handle an object with duplicate modified keys', () => {
 			const obj = { a: 1, b: 2, c: 3 };
 			const callback: NumberStringFunction = (key) => 'new_key';
-			expect(() => modifyKeys(obj, callback)).toThrow(Error);
+			const result = modifyKeys(obj, callback, true);
+			expect(result).toEqual({ new_key: 1 });
 		});
 
 		it('should handle an object with duplicate modified keys if ignoreDuplicates is false', () => {
@@ -208,6 +220,40 @@ describe('modifyKeys function', () => {
 			const callback: NumberStringFunction = (key) => 'new_key';
 			const result = modifyKeys(obj, callback, false);
 			expect(result).toEqual({ new_key: 3 });
+		});
+
+		it('should throw an error in strict mode if given a non-object value', () => {
+			'use strict';
+			const callback: NumberStringFunction = (key: number | string) => 'new_key';
+			const fn = () => {};
+			expect(() => modifyKeys(undefined as any, callback)).toThrow(
+				new TypeError('Invalid type of undefined. Expected JavaScript object')
+			);
+			expect(() => modifyKeys(123 as any, callback)).toThrow(
+				new TypeError('Invalid type of Number. Expected JavaScript object')
+			);
+			expect(() => modifyKeys('string' as any, callback)).toThrow(
+				new TypeError('Invalid type of String. Expected JavaScript object')
+			);
+			expect(() => modifyKeys(Symbol() as any, callback)).toThrow(
+				new TypeError('Invalid type of Symbol. Expected JavaScript object')
+			);
+			expect(() => modifyKeys(true as any, callback)).toThrow(
+				new TypeError('Invalid type of Boolean. Expected JavaScript object')
+			);
+			expect(() => modifyKeys(fn as any, callback)).toThrow(
+				new TypeError('Invalid type of Function. Expected JavaScript object')
+			);
+			expect(() => modifyKeys([] as any, callback)).toThrow(
+				new TypeError('Invalid type of Array. Expected JavaScript object')
+			);
+			expect(() => modifyKeys(new Date() as any, callback)).toThrow(
+				new TypeError(`Invalid type of Date. Expected JavaScript object`)
+			);
+			class MyClass {}
+			expect(() => modifyKeys(new MyClass() as any, callback)).toThrow(
+				new TypeError(`Invalid type of MyClass. Expected JavaScript object`)
+			);
 		});
 	});
 });

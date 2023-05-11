@@ -55,20 +55,20 @@ describe('toMap', () => {
 
 describe('toIndexedArray', () => {
 	const { toIndexedArray } = arrays;
-	// it('should return an indexed array with basic objects', () => {
-	// 	const items = [
-	// 		{ name: 'Adam', id: 1 },
-	// 		{ name: 'Bartek', id: 4 },
-	// 		{ name: 'Czesiek', id: 5 },
-	// 	];
+	it('should return an indexed array with basic objects', () => {
+		const items = [
+			{ name: 'Adam', id: 1 },
+			{ name: 'Bartek', id: 4 },
+			{ name: 'Czesiek', id: 5 },
+		];
 
-	// 	const callback = (item) => item.id;
-	// 	const result = toIndexedArray(items, callback);
+		const callback = (item: any) => item.id;
+		const result = toIndexedArray(items, callback);
 
-	// 	expect(result[1]).toEqual({ name: 'Adam', id: 1 });
-	// 	expect(result[4]).toEqual({ name: 'Bartek', id: 4 });
-	// 	expect(result[5]).toEqual({ name: 'Czesiek', id: 5 });
-	// });
+		expect(result[1]).toEqual({ name: 'Adam', id: 1 });
+		expect(result[4]).toEqual({ name: 'Bartek', id: 4 });
+		expect(result[5]).toEqual({ name: 'Czesiek', id: 5 });
+	});
 
 	it('should handle custom class instances', () => {
 		class Person {
