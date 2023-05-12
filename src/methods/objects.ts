@@ -1,5 +1,3 @@
-import { isDate } from 'util/types';
-
 type AnyObject = { [key: string]: any };
 type NumberStringFunction = (key: string, item: any) => number | string;
 
