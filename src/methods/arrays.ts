@@ -35,4 +35,6 @@ const toIndexedArray = (items: any[], callback: NumberFunction): any[] => {
 	return arr;
 };
 
+export { toMap, toIndexedArray };
+
 export default { toMap, toIndexedArray };
