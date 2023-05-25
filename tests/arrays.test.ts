@@ -1,4 +1,4 @@
-import arrays from '../src/arrays';
+import arrays from '../src/methods/arrays';
 
 /**
  * Unit tests for toMap function

@@ -1,72 +1,4 @@
-import objects from '../src/objects';
-
-describe('isObject', () => {
-	const isObject = objects.isObject;
-	test('returns true for non-empty object', () => {
-		const obj = { value: 123 };
-		expect(isObject(obj)).toEqual(true);
-	});
-
-	test('returns true for empty object', () => {
-		expect(isObject({})).toEqual(true);
-	});
-	test('should return true for an object', () => {
-		const obj = { key: 'value' };
-		expect(isObject(obj)).toBe(true);
-	});
-
-	test('should return false for an array', () => {
-		const arr = [1, 2, 3];
-		expect(isObject(arr)).toBe(false);
-	});
-
-	test('should return false for null', () => {
-		expect(isObject(null)).toBe(false);
-	});
-
-	test('should return false for undefined', () => {
-		expect(isObject(undefined)).toBe(false);
-	});
-
-	test('should return false for a string', () => {
-		expect(isObject('string')).toBe(false);
-	});
-
-	test('should return false for a number', () => {
-		expect(isObject(42)).toBe(false);
-	});
-
-	test('should return false for a boolean', () => {
-		expect(isObject(true)).toBe(false);
-		expect(isObject(false)).toBe(false);
-	});
-
-	test('should return false for a function', () => {
-		const func = () => {};
-		expect(isObject(func)).toBe(false);
-	});
-});
-
-describe('isPlainObject', () => {
-	const { isPlainObject } = objects;
-	it('should return true for plain JavaScript objects', () => {
-		expect(isPlainObject({})).toBe(true);
-		expect(isPlainObject({ key: 'value' })).toBe(true);
-	});
-
-	it('should return false for non-plain JavaScript objects', () => {
-		expect(isPlainObject([])).toBe(false);
-		expect(isPlainObject(new Date())).toBe(false);
-		expect(isPlainObject(null)).toBe(false);
-		expect(isPlainObject(undefined)).toBe(false);
-		expect(isPlainObject(123)).toBe(false);
-		expect(isPlainObject('string')).toBe(false);
-		expect(isPlainObject(true)).toBe(false);
-		expect(isPlainObject(() => {})).toBe(false);
-		class CustomClass {}
-		expect(isPlainObject(new CustomClass())).toBe(false);
-	});
-});
+import objects from '../src/methods/objects';
 
 describe('merge', () => {
 	const merge = objects.merge;
@@ -143,9 +75,7 @@ describe('invert', () => {
 
 	it('Invalid value type', () => {
 		const input = { key1: true } as unknown as Record<string | number, string | number>;
-		expect(() => invert(input)).toThrowError(
-			'Invalid value type: the value must be a string or a number.'
-		);
+		expect(() => invert(input)).toThrowError('Invalid value type: the value must be a string or a number.');
 	});
 });
 

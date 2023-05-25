@@ -1,9 +1,7 @@
+import { isObject, isPlainObject } from './variables';
+
 type AnyObject = { [key: string]: any };
 type NumberStringFunction = (key: string, item: any) => number | string;
-
-const isObject = (value: unknown) => typeof value === 'object' && !Array.isArray(value) && value !== null;
-
-const isPlainObject = (value: unknown) => value?.constructor.name === 'Object';
 
 const merge = (objects: AnyObject[], override: boolean = false): AnyObject => {
 	const merged: AnyObject = {};
@@ -18,9 +16,7 @@ const merge = (objects: AnyObject[], override: boolean = false): AnyObject => {
 	return merged;
 };
 
-const invert = (
-	obj: Record<string | number, string | number>
-): Record<string | number, string | number> => {
+const invert = (obj: Record<string | number, string | number>): Record<string | number, string | number> => {
 	if (!isObject(obj)) {
 		throw new Error('Invalid input: the input must be an object.');
 	}
@@ -39,8 +35,7 @@ const invert = (
 };
 
 const modifyKeys = (obj: AnyObject, callback: NumberStringFunction, ignoreDuplicates = true) => {
-	if (!isPlainObject(obj))
-		throw new TypeError(`Invalid type of ${obj?.constructor.name}. Expected JavaScript object`);
+	if (!isPlainObject(obj)) throw new TypeError(`Invalid type of ${obj?.constructor.name}. Expected JavaScript object`);
 	const entries = Object.entries(obj || {});
 	const result: AnyObject = {};
 	entries.forEach(([key, value]) => {
@@ -52,4 +47,4 @@ const modifyKeys = (obj: AnyObject, callback: NumberStringFunction, ignoreDuplic
 	return result;
 };
 
-export default { isObject, isPlainObject, merge, invert, modifyKeys };
+export default { merge, invert, modifyKeys };

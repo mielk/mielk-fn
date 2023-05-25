@@ -1,0 +1,127 @@
+{
+    "objects": {
+        "isArrayOfPrimitives": {
+            "summary": "Checks if a given value is an array of primitive values.",
+            "signature": "const isArrayOfPrimitives = (value: any, includeNullAndUndefined: boolean = true): boolean => {}",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "any",
+                    "description": "The value to be checked if it is an array of primitive values."
+                },
+                {
+                    "name": "includeNullAndUndefined",
+                    "type": "boolean",
+                    "description": "Determines if <span class=\"keyword\">null</span> and <span class=\"keyword\">undefined</span> should be considered to be primitive values. Defaults to <span class=\"keyword\">true</span>."
+                }
+            ],
+            "returns": {
+                "type": "boolean",
+                "description": "Returns <span class=\"keyword\">true</span> only if <span class=\"keyword\">value</span> is an array and it contains only primitive values. If <span class=\"keyword\">value</span> is an empty array, it returns <span class=\"keyword\">false</span>."
+            },
+            "examples": [
+                "<span class=\"keyword\">const</span> result1 = isArrayOfPrimitives([1, 2, 3]) <span class=\"comment\">// returns true</span>",
+                "<span class=\"keyword\">const</span> result2 = isArrayOfPrimitives([1, <span class=\"keyword\">null</span>, <span class=\"keyword\">undefined</span>]) <span class=\"comment\">// returns true</span>",
+                "<span class=\"keyword\">const</span> result3 = isArrayOfPrimitives([1, <span class=\"keyword\">null</span>, <span class=\"keyword\">undefined</span>], <span class=\"keyword\">false</span>) <span class=\"comment\">// returns false</span>",
+                "<span class=\"keyword\">const</span> result4 = isArrayOfPrimitives([]) <span class=\"comment\">// returns false</span>",
+                "<span class=\"keyword\">const</span> result5 = isArrayOfPrimitives(['hello', 'world']) <span class=\"comment\">// returns true</span>",
+                "<span class=\"keyword\">const</span> result6 = isArrayOfPrimitives([{}]) <span class=\"comment\">// returns false</span>"
+            ]
+        },
+        "isObject": {
+            "summary": "Determines if the given value is an object, excluding arrays and null values.",
+            "signature": "function isObject(value: unknown): boolean",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "unknown",
+                    "description": "The value to be checked for being an object."
+                }
+            ],
+            "returns": {
+                "type": "boolean",
+                "description": "Returns <code>true</code> if the input value is an object (excluding arrays and null values), and <code>false</code> otherwise."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> obj = { key: <span class=\"string\">'value'</span> };",
+                    "console.log(<span class=\"function\">isObject</span>(obj)); <span class=\"comment\">// Output: true</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> arr = [<span class=\"number\">1</span>, <span class=\"number\">2</span>, <span class=\"number\">3</span>];",
+                    "console.log(<span class=\"function\">isObject</span>(arr)); <span class=\"comment\">// Output: false</span>"
+                ],
+                [
+                    "console.log(<span class=\"function\">isObject</span>(<span class=\"keyword\">null</span>)); <span class=\"comment\">// Output: false</span>"
+                ]
+            ]
+        },
+        "isPlainObject": {
+            "summary": "Checks if a value is a plain JavaScript object.",
+            "signature": "(value: unknown) => boolean",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "unknown",
+                    "description": "The value to check."
+                }
+            ],
+            "returns": {
+                "type": "boolean",
+                "description": "Returns `true` if the value is a plain JavaScript object, `false` otherwise."
+            },
+            "examples": [
+                [
+                    "<span class=\"keyword\">const</span> obj = { id: 1, name: 'John' };",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(obj)); <span class=\"comment\">// Output: true</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> date = <span class=\"keyword\">new</span> <span class=\"class\">Date</span>();",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(date)); <span class=\"comment\">// Output: false</span>"
+                ],
+                [
+                    "<span class=\"keyword\">class</span> <span class=\"class\">Person</span> {",
+                    "  <span class=\"keyword\">constructor</span>(<span class=\"keyword\">public</span> name: <span class=\"keyword\">string</span>) {}",
+                    "}",
+                    "<span class=\"keyword\">const</span> person = <span class=\"keyword\">new</span> <span class=\"class\">Person</span>('Jane');",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(person)); <span class=\"comment\">// Output: false</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> user = { name: 'Alice', age: 25, isAdmin: <span class=\"literal\">false</span> };",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(user)); <span class=\"comment\">// Output: true</span>"
+                ],
+                [
+                    "<span class=\"keyword\">const</span> arr = [<span class=\"string\">'apple'</span>, <span class=\"string\">'banana'</span>, <span class=\"string\">'orange'</span>];",
+                    "<span class=\"function\">console.log</span>(<span class=\"function\">isPlainObject</span>(arr)); <span class=\"comment\">// Output: false</span>"
+                ]
+            ]
+        },
+        "isPrimitive": {
+            "functionName": "isPrimitive",
+            "summary": "This function checks if the provided value is a primitive type in JavaScript.",
+            "signature": "function isPrimitive(value: any): boolean",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "any",
+                    "description": "The value to be checked."
+                }
+            ],
+            "returns": {
+                "type": "boolean",
+                "description": "Returns true if the value is a primitive type, false otherwise."
+            },
+            "examples": [
+                [
+                    "isPrimitive('Hello') <span class=\"comment\">// returns true</span>"
+                ],
+                [
+                    "isPrimitive({}) <span class=\"comment\">// returns false</span>"
+                ],
+                [
+                    "isPrimitive(undefined) <span class=\"comment\">// returns true</span>"
+                ]
+            ]
+        }
+    }
+}

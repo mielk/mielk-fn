@@ -1,12 +1,12 @@
 {
   "name": "mielk-fn",
-  "version": "1.0.1",
+  "version": "1.0.11",
   "description": "Set of helpful functions",
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
+    "prepublishOnly": "npm test",
     "test": "jest",
-    "prepublish": "npm test",
     "build": "tsc"
   },
   "repository": {

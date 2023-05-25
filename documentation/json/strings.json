@@ -1,0 +1,31 @@
+{
+    "strings": {
+        "clear": {
+            "functionName": "clear",
+            "summary": "This function removes leading and trailing spaces, as well as multiple spaces inside a string.",
+            "signature": "function clear(input: string): string",
+            "parameters": [
+                {
+                    "name": "input",
+                    "type": "string",
+                    "description": "The string to be processed."
+                }
+            ],
+            "returns": {
+                "type": "string",
+                "description": "Returns the processed string with no leading/trailing spaces and no multiple spaces inside."
+            },
+            "examples": [
+                [
+                    "clear(' Hello World ') <span class=\"comment\">// returns 'Hello World'</span>"
+                ],
+                [
+                    "clear(' Hello    World ') <span class=\"comment\">// returns 'Hello World'</span>"
+                ],
+                [
+                    "clear('     ') <span class=\"comment\">// returns ''</span>"
+                ]
+            ]
+        }
+    }
+}
