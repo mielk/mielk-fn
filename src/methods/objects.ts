@@ -2,6 +2,9 @@ import { isObject, isPlainObject } from './variables';
 
 type AnyObject = { [key: string]: any };
 type NumberStringFunction = (key: string, item: any) => number | string;
+type InvertAllowedTypes = string | number;
+
+//function invert<T extends AllowedTypes, U extends AllowedTypes>(obj: Record<T, U>): Record<U, T>
 
 const merge = (objects: AnyObject[], override: boolean = false): AnyObject => {
 	const merged: AnyObject = {};
@@ -16,25 +19,24 @@ const merge = (objects: AnyObject[], override: boolean = false): AnyObject => {
 	return merged;
 };
 
-const invert = (obj: Record<string | number, string | number>): Record<string | number, string | number> => {
+function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(obj: Record<T, U>): Record<U, T> {
 	if (!isObject(obj)) {
 		throw new Error('Invalid input: the input must be an object.');
 	}
 
-	const inverted: Record<string | number, string | number> = {};
-
-	for (const [key, value] of Object.entries(obj)) {
+	const inverted = {} as Record<U, T>;
+	for (const key in obj) {
+		const value = obj[key];
 		if (typeof value !== 'string' && typeof value !== 'number') {
 			throw new Error('Invalid value type: the value must be a string or a number.');
 		}
-
 		inverted[value] = key;
 	}
 
 	return inverted;
-};
+}
 
-const modifyKeys = (obj: AnyObject, callback: NumberStringFunction, ignoreDuplicates = true) => {
+const modifyKeys = (obj: AnyObject, callback: NumberStringFunction, ignoreDuplicates = true): AnyObject => {
 	if (!isPlainObject(obj)) throw new TypeError(`Invalid type of ${obj?.constructor.name}. Expected JavaScript object`);
 	const entries = Object.entries(obj || {});
 	const result: AnyObject = {};

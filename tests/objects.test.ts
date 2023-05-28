@@ -77,6 +77,36 @@ describe('invert', () => {
 		const input = { key1: true } as unknown as Record<string | number, string | number>;
 		expect(() => invert(input)).toThrowError('Invalid value type: the value must be a string or a number.');
 	});
+
+	it('should invert object with string keys and number values', () => {
+		const obj = { a: 1, b: 2, c: 3 };
+		const result = invert(obj);
+		expect(result).toEqual({ '1': 'a', '2': 'b', '3': 'c' });
+	});
+
+	it('should invert object with number keys and string values', () => {
+		const obj = { '1': 'a', '2': 'b', '3': 'c' };
+		const result = invert(obj);
+		expect(result).toEqual({ a: '1', b: '2', c: '3' });
+	});
+
+	it('should invert object with string keys and string values', () => {
+		const obj = { a: '1', b: '2', c: '3' };
+		const result = invert(obj);
+		expect(result).toEqual({ '1': 'a', '2': 'b', '3': 'c' });
+	});
+
+	it('should invert object with number keys and number values', () => {
+		const obj = { '1': 2, '3': 4, '5': 6 };
+		const result = invert(obj);
+		expect(result).toEqual({ '2': '1', '4': '3', '6': '5' });
+	});
+
+	it('should invert object with unusual but valid keys or values', () => {
+		const obj = { '': 1, a: 0, b: -1 };
+		const result = invert(obj);
+		expect(result).toEqual({ '1': '', '0': 'a', '-1': 'b' });
+	});
 });
 
 describe('modifyKeys function', () => {
