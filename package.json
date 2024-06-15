@@ -1,6 +1,6 @@
 {
   "name": "mielk-fn",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Set of helpful functions",
   "main": "lib/index.js",
   "type": "module",
