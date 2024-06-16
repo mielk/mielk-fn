@@ -104,9 +104,7 @@ describe('toIndexedArray', () => {
 		];
 
 		const callback = (item: any) => item.id;
-		expect(() => toIndexedArray(items, callback)).toThrow(
-			new TypeError('Callback should return a number.')
-		);
+		expect(() => toIndexedArray(items, callback)).toThrow(new TypeError('Callback should return a number.'));
 	});
 
 	it('should handle an empty array', () => {

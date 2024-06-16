@@ -1,4 +1,4 @@
-import { isObject, isPlainObject } from './variables';
+import { isObject, isPlainObject } from './variables.js';
 
 type AnyObject = { [key: string]: any };
 type NumberStringFunction = (key: string, item: any) => number | string;

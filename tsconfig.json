@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"module": "CommonJS",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"target": "ES6",
 		"rootDir": "./src" /* Specify the root folder within your source files. */,
 		"declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
