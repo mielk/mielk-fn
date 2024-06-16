@@ -6,5 +6,22 @@ export default {
 	testMatch: [
 		'**/?(*.)+(spec|test).ts?(x)', // Match test files with .spec.ts or .test.ts extensions
 	],
-	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'], // File extensions for modules
+	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+	moduleNameMapper: {
+		'^(\\.{1,2}/.*)\\.js$': '$1',
+	},
+	reporters: [
+		'default',
+		[
+			'jest-html-reporters',
+			{
+				publicPath: './reports/html-report',
+				filename: 'report.html',
+				pageTitle: 'My Project - Test Report',
+				expand: true,
+				openReport: true,
+				groupBy: ['describe'],
+			},
+		],
+	],
 };

@@ -1,7 +1,7 @@
-import arrays from './methods/arrays';
-import objects from './methods/objects';
-import strings from './methods/strings';
-import variables from './methods/variables';
+import arrays from './methods/arrays.js';
+import objects from './methods/objects.js';
+import strings from './methods/strings.js';
+import variables from './methods/variables.js';
 
 export { arrays, objects, strings, variables };
 
