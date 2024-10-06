@@ -1,8 +1,5 @@
 import arrays from '../src/methods/arrays';
 
-/**
- * Unit tests for toMap function
- */
 describe('toMap', () => {
 	const { toMap } = arrays;
 	const objects = [

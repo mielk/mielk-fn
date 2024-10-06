@@ -1,12 +1,12 @@
 {
   "name": "mielk-fn",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "Set of helpful functions",
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
     "prepublishOnly": "npm test",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "build": "tsc"
   },
   "repository": {
@@ -20,20 +20,19 @@
   },
   "homepage": "https://github.com/mielk/mielk-fn#readme",
   "devDependencies": {
-    "@babel/cli": "^7.24.7",
-    "@babel/core": "^7.24.7",
-    "@babel/node": "^7.24.7",
-    "@babel/plugin-transform-modules-commonjs": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.25.2",
+    "@babel/node": "^7.25.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.8",
+    "@babel/preset-env": "^7.25.4",
     "@babel/preset-typescript": "^7.24.7",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.2",
+    "@types/node": "^22.5.0",
     "babel-jest": "^29.7.0",
     "jest-html-reporters": "^3.1.7",
-    "ts-jest": "^29.1.4",
+    "ts-jest": "^29.2.5",
     "tsc-alias": "^1.8.10",
-    "tsc-alias": "^1.8.10",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.4"
   },
   "files": [
     "lib"
