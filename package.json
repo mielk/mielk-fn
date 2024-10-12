@@ -1,6 +1,6 @@
 {
   "name": "mielk-fn",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Set of helpful functions",
   "main": "lib/index.js",
   "type": "module",
@@ -20,19 +20,19 @@
   },
   "homepage": "https://github.com/mielk/mielk-fn#readme",
   "devDependencies": {
-    "@babel/cli": "^7.24.8",
-    "@babel/core": "^7.25.2",
-    "@babel/node": "^7.25.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.24.8",
-    "@babel/preset-env": "^7.25.4",
-    "@babel/preset-typescript": "^7.24.7",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^22.5.0",
+    "@babel/cli": "^7.25.7",
+    "@babel/core": "^7.25.7",
+    "@babel/node": "^7.25.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.25.7",
+    "@babel/preset-env": "^7.25.7",
+    "@babel/preset-typescript": "^7.25.7",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.7.4",
     "babel-jest": "^29.7.0",
     "jest-html-reporters": "^3.1.7",
     "ts-jest": "^29.2.5",
     "tsc-alias": "^1.8.10",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   },
   "files": [
     "lib"

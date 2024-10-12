@@ -217,3 +217,43 @@ describe('modifyKeys function', () => {
 		});
 	});
 });
+
+describe('isNonEmptyObject', () => {
+	const isNonEmptyObject = objects.isNonEmptyObject;
+
+	it('should return false for a number', () => {
+		expect(isNonEmptyObject(1)).toBeFalsy();
+	});
+
+	it('should return false for a text', () => {
+		expect(isNonEmptyObject('a')).toBeFalsy();
+	});
+
+	it('should return false for non-empty array', () => {
+		expect(isNonEmptyObject([1, 2, 3])).toBeFalsy();
+	});
+
+	it('should return false for empty array', () => {
+		expect(isNonEmptyObject([])).toBeFalsy();
+	});
+
+	it('should return false for multidimensional array', () => {
+		expect(isNonEmptyObject([[], []])).toBeFalsy();
+	});
+
+	it('should return false for null', () => {
+		expect(isNonEmptyObject(null)).toBeFalsy();
+	});
+
+	it('should return false for undefined', () => {
+		expect(isNonEmptyObject(undefined)).toBeFalsy();
+	});
+
+	it('should return false for empty object', () => {
+		expect(isNonEmptyObject({})).toBeFalsy();
+	});
+
+	it('should return true for non-empty object', () => {
+		expect(isNonEmptyObject({ id: 1 })).toBeTruthy();
+	});
+});

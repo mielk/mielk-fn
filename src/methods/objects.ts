@@ -49,4 +49,9 @@ const modifyKeys = (obj: AnyObject, callback: NumberStringFunction, ignoreDuplic
 	return result;
 };
 
-export default { merge, invert, modifyKeys };
+const isNonEmptyObject = (obj: any): boolean => {
+	if (!isObject(obj)) return false;
+	return Object.keys(obj).length > 0;
+};
+
+export default { merge, invert, modifyKeys, isNonEmptyObject };
