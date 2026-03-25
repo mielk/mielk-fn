@@ -1,6 +1,6 @@
 {
 	"name": "mielk-fn",
-	"version": "0.0.1",
+	"version": "1.0.26",
 	"keywords": [],
 	"author": "mielk",
 	"description": "Generic functions used in various projects",
@@ -10,11 +10,53 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js"
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
 		},
-		"./string": {
-			"types": "./dist/string/index.d.ts",
-			"import": "./dist/string/index.js"
+		"./arrays": {
+			"types": "./dist/arrays/index.d.ts",
+			"import": "./dist/arrays/index.js",
+			"default": "./dist/arrays/index.js"
+		},
+		"./dates": {
+			"types": "./dist/dates/index.d.ts",
+			"import": "./dist/dates/index.js",
+			"default": "./dist/dates/index.js"
+		},
+		"./io": {
+			"types": "./dist/io/index.d.ts",
+			"import": "./dist/io/index.js",
+			"default": "./dist/io/index.js"
+		},
+		"./math": {
+			"types": "./dist/math/index.d.ts",
+			"import": "./dist/math/index.js",
+			"default": "./dist/math/index.js"
+		},
+		"./objects": {
+			"types": "./dist/objects/index.d.ts",
+			"import": "./dist/objects/index.js",
+			"default": "./dist/objects/index.js"
+		},
+		"./regex": {
+			"types": "./dist/regex/index.d.ts",
+			"import": "./dist/regex/index.js",
+			"default": "./dist/regex/index.js"
+		},
+		"./strings": {
+			"types": "./dist/strings/index.d.ts",
+			"import": "./dist/strings/index.js",
+			"default": "./dist/strings/index.js"
+		},
+		"./types": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/types/index.js",
+			"default": "./dist/types/index.js"
+		},
+		"./variables": {
+			"types": "./dist/variables/index.d.ts",
+			"import": "./dist/variables/index.js",
+			"default": "./dist/variables/index.js"
 		}
 	},
 	"scripts": {
