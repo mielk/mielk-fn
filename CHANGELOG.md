@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.30](https://github.com/mielk/mielk-fn/compare/v1.0.29...v1.0.30) (2026-03-25)
+
+
+### Bug Fixes
+
+* Add JSONFile type. ([614e50b](https://github.com/mielk/mielk-fn/commit/614e50b1ff8d9abf25851199b15432d7ea18b9f8))
+
 ### [1.0.29](https://github.com/mielk/mielk-fn/compare/v1.0.28...v1.0.29) (2026-03-25)
 
 ### [1.0.28](https://github.com/mielk/mielk-fn/compare/v1.0.27...v1.0.28) (2026-03-25)
