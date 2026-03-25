@@ -1,4 +1,7 @@
+import type { JSONFile } from './io.js';
 import type { Range } from './math.js';
 import type { AnyObject } from './objects.js';
 
-export type { AnyObject, Range };
+export type { JSONFile };
+export type { Range };
+export type { AnyObject };

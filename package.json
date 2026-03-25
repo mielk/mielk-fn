@@ -63,7 +63,7 @@
 		"test": "jest --detectOpenHandles",
 		"build": "tsc",
 		"prepublishOnly": "npm test && npm run build",
-		"dev": "tsc -w",
+		"dev": "tsc --watch",
 		"release": "standard-version"
 	},
 	"license": "ISC",

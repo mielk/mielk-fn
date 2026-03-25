@@ -1,1 +1,3 @@
-export * from './io.js';
+import { parseJsonFile } from './io.js';
+
+export { parseJsonFile }
