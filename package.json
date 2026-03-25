@@ -1,0 +1,28 @@
+{
+	"name": "mielk-fn",
+	"version": "0.0.1",
+	"keywords": [],
+	"author": "mielk",
+	"description": "Generic functions used in various projects",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./string": {
+			"types": "./dist/string/index.d.ts",
+			"import": "./dist/string/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc -w"
+	},
+	"license": "ISC",
+	"devDependencies": {
+		"typescript": "^6.0.2"
+	}
+}
