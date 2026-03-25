@@ -1,22 +1,16 @@
 {
 	"compilerOptions": {
+		"moduleResolution": "bundler",
 		"target": "ES2020",
 		"module": "ESNext",
-		"moduleResolution": "bundler",
+		"declaration": true,
 		"outDir": "dist",
 		"rootDir": "src",
-		"sourceMap": true,
-		"declaration": true,
-		"declarationMap": true,
-		"strict": true,
 		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"jsx": "react-jsx",
-		"verbatimModuleSyntax": true,
-		"isolatedModules": true,
-		"noUncheckedSideEffectImports": true,
-		"moduleDetection": "force",
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true
 	},
-	"include": ["src"]
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }

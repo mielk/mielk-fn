@@ -1,12 +1,12 @@
-import type { AnyObject } from "../types/objects.js";
+import type { ObjectAny } from "../types/objects.js";
 import { isObject, isPlainObject } from "../variables/variables.js";
 
 type NumberStringFunction = (key: string, item: any) => number | string;
 
 type InvertAllowedTypes = string | number;
 
-const merge = (objects: AnyObject[], override: boolean = false): AnyObject => {
-  const merged: AnyObject = {};
+const merge = (objects: ObjectAny[], override: boolean = false): ObjectAny => {
+  const merged: ObjectAny = {};
   objects.forEach((obj) => {
     if (isObject(obj)) {
       const entries = Object.entries(obj);
@@ -35,10 +35,10 @@ function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(obj:
   return inverted;
 }
 
-const modifyKeys = (obj: AnyObject, callback: NumberStringFunction, ignoreDuplicates = true): AnyObject => {
+const modifyKeys = (obj: ObjectAny, callback: NumberStringFunction, ignoreDuplicates = true): ObjectAny => {
   if (!isPlainObject(obj)) throw new TypeError(`Invalid type of ${obj?.constructor.name}. Expected JavaScript object`);
   const entries = Object.entries(obj || {});
-  const result: AnyObject = {};
+  const result: ObjectAny = {};
   entries.forEach(([key, value]) => {
     const newKey: string | number = callback(key, value);
     if (!result.hasOwnProperty(newKey) || !ignoreDuplicates) {

@@ -1,4 +1,4 @@
-import { isPlainObject } from "../variables";
+import { isPlainObject } from "../variables/variables.js";
 
 export const parseJsonFile = (file: unknown): Record<string, unknown> => {
     if (file && typeof file === 'object' && 'default' in file) {
