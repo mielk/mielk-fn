@@ -18,11 +18,24 @@
 		}
 	},
 	"scripts": {
+		"test": "jest --detectOpenHandles",
 		"build": "tsc",
-		"dev": "tsc -w"
+		"prepublishOnly": "npm test && npm run build",
+		"dev": "tsc -w",
+		"release": "standard-version"
 	},
 	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mielk/mielk-fn.git"
+	},
+	"homepage": "https://mielk.github.io/mielk-fn/",
 	"devDependencies": {
-		"typescript": "^6.0.2"
+		"@types/jest": "^30.0.0",
+		"jest": "^30.3.0",
+		"jest-html-reporters": "^3.1.7",
+		"standard-version": "^9.5.0",
+		"ts-jest": "^29.4.6",
+		"typescript": "^5.9.2"
 	}
 }
