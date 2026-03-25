@@ -62,8 +62,6 @@ describe('toIndexedArray', () => {
     const callback = (item: any) => item.id;
     const result = toIndexedArray(items, callback);
 
-    console.log(result);
-
     expect(result[1]).toEqual({ name: 'Adam', id: 1 });
     expect(result[4]).toEqual({ name: 'Bartek', id: 4 });
     expect(result[5]).toEqual({ name: 'Czesiek', id: 5 });
