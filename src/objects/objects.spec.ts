@@ -147,7 +147,7 @@ describe('merge', () => {
   });
 });
 
-describe('modifyKeys function', () => {
+describe('modifyKeys', () => {
   type NumberStringFunction = (key: number | string) => number | string;
 
   describe('modifyKeys', () => {
