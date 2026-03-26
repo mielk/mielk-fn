@@ -48,11 +48,6 @@
 			"import": "./dist/strings/index.js",
 			"default": "./dist/strings/index.js"
 		},
-		"./tags": {
-			"types": "./dist/tags/index.d.ts",
-			"import": "./dist/tags/index.js",
-			"default": "./dist/tags/index.js"
-		},
 		"./types": {
 			"types": "./dist/types/index.d.ts",
 			"import": "./dist/types/index.js",
