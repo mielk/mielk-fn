@@ -1,6 +1,6 @@
 {
 	"name": "mielk-fn",
-	"version": "1.0.32",
+	"version": "1.1.0",
 	"keywords": [],
 	"author": "mielk",
 	"description": "Generic functions used in various projects",
@@ -52,7 +52,7 @@
 			"types": "./dist/tags/index.d.ts",
 			"import": "./dist/tags/index.js",
 			"default": "./dist/tags/index.js"
-		},		
+		},
 		"./types": {
 			"types": "./dist/types/index.d.ts",
 			"import": "./dist/types/index.js",
