@@ -1,17 +1,36 @@
 import { createClient, RedisClientType } from 'redis';
 
-const redisClient: RedisClientType = createClient({
-    url: 'redis://localhost:6379',
-});
+export interface RedisConfig {
+    host?: string;
+    port?: string;
+    password?: string;
+}
 
-redisClient.on('error', (err) => console.error('Redis error:', err));
+const defaultHost: string = '127.0.0.1';
+const defaultPort: string = '6379';
 
+let redisClient: RedisClientType | null = null;
 let connected = false;
 
-export async function getRedisClient() {
+const createRedisClient = (config?: RedisConfig): RedisClientType => {
+    const { host, port } = config || {};
+    const client: RedisClientType = createClient({
+        url: `redis://${host || defaultHost}:${port || defaultPort}`,
+    });
+    client.on('error', (err) => console.error('Redis error:', err));
+    console.log('Redis URL:', `redis://${host}:${port}`);
+    return client;
+}
+
+export async function getRedisClient(config?: RedisConfig) {
+    if (redisClient === null) {
+        redisClient = createRedisClient(config);
+    }
+
     if (!connected) {
         await redisClient.connect();
         connected = true;
     }
+
     return redisClient;
 }

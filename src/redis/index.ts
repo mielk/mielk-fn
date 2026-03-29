@@ -1,3 +1,3 @@
-import { getRedisClient } from './redisClient.js';
+import { getRedisClient, RedisConfig } from './redisClient.js';
 
-export { getRedisClient };
+export { getRedisClient, RedisConfig };
