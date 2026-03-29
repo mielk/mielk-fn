@@ -38,6 +38,11 @@
 			"import": "./dist/objects/index.js",
 			"default": "./dist/objects/index.js"
 		},
+		"./redis": {
+			"types": "./dist/redis/index.d.ts",
+			"import": "./dist/redis/index.js",
+			"default": "./dist/redis/index.js"
+		},		
 		"./regex": {
 			"types": "./dist/regex/index.d.ts",
 			"import": "./dist/regex/index.js",
@@ -82,5 +87,8 @@
 	},
 	"files": [
 		"dist"
-	]
+	],
+	"dependencies": {
+		"redis": "^5.11.0"
+	}
 }
