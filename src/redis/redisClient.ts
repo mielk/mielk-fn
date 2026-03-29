@@ -6,16 +6,17 @@ export interface RedisConfig {
     password?: string;
 }
 
-const defaultHost: string = '127.0.0.1';
-const defaultPort: string = '6379';
+const defaultHost: string = '127.0.0.1'; //'127.0.0.1';
+const defaultPort: string = '6179'; //'6379';
 
+let redisConfig: RedisConfig = { host: defaultHost, port: defaultPort }
 let redisClient: RedisClientType | null = null;
 let connected = false;
 
-const createRedisClient = (config?: RedisConfig): RedisClientType => {
-    const { host, port } = config || {};
+const createRedisClient = (config: RedisConfig): RedisClientType => {
+    const { host, port } = config;
     const client: RedisClientType = createClient({
-        url: `redis://${host || defaultHost}:${port || defaultPort}`,
+        url: `redis://${host}:${port}`,
     });
     client.on('error', (err) => console.error('Redis error:', err));
     console.log('Redis URL:', `redis://${host}:${port}`);
@@ -24,7 +25,11 @@ const createRedisClient = (config?: RedisConfig): RedisClientType => {
 
 export async function getRedisClient(config?: RedisConfig) {
     if (redisClient === null) {
-        redisClient = createRedisClient(config);
+        redisConfig = {
+            ...redisConfig,
+            ...config,
+        }
+        redisClient = createRedisClient(redisConfig);
     }
 
     if (!connected) {
