@@ -1,6 +1,6 @@
 {
 	"name": "mielk-fn",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"keywords": [],
 	"author": "mielk",
 	"description": "Generic functions used in various projects",
@@ -42,7 +42,7 @@
 			"types": "./dist/redis/index.d.ts",
 			"import": "./dist/redis/index.js",
 			"default": "./dist/redis/index.js"
-		},		
+		},
 		"./regex": {
 			"types": "./dist/regex/index.d.ts",
 			"import": "./dist/regex/index.js",
