@@ -11,7 +11,7 @@ export const addRedisKey = async (key: string, content: Record<string, unknown>,
     const options: SetOptions = ttlSeconds ? createExpirationOptionObject(ttlSeconds) : {};
     await redisClient.set(
         key,
-        JSON.stringify({ locked: true }),
+        JSON.stringify(content),
         options
     );
 }
