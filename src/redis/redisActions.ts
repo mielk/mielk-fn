@@ -1,5 +1,5 @@
 import { SetOptions } from "redis";
-import { getRedisClient } from "./redisClient";
+import { getRedisClient } from "./redisClient.js";
 
 export const removeRedisKey = async (key: string) => {
     const redisClient = await getRedisClient();
