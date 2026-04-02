@@ -6,8 +6,8 @@ export interface RedisConfig {
     password?: string;
 }
 
-const defaultHost: string = '127.0.0.1'; //'127.0.0.1';
-const defaultPort: string = '6179'; //'6379';
+const defaultHost: string = '127.0.0.1';
+const defaultPort: string = '6379';
 
 let redisConfig: RedisConfig = { host: defaultHost, port: defaultPort }
 let redisClient: RedisClientType | null = null;
