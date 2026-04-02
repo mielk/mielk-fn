@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.5](https://github.com/mielk/mielk-fn/compare/v1.2.4...v1.2.5) (2026-04-02)
+
+
+### Bug Fixes
+
+* Specify .js in redisClient module path. ([e2d3f84](https://github.com/mielk/mielk-fn/commit/e2d3f84ffcf885396511121c9ca81ece2f22f8ef))
+
 ### [1.2.4](https://github.com/mielk/mielk-fn/compare/v1.2.3...v1.2.4) (2026-04-02)
 
 
