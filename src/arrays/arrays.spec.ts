@@ -1,6 +1,4 @@
-import { toIndexedArray, toMap } from "./arrays.js";
-
-
+import { toIndexedArray, toMap } from './arrays.js';
 
 describe('toMap', () => {
   const objects = [
@@ -30,7 +28,7 @@ describe('toMap', () => {
     const map = toMap(
       objects,
       (obj) => obj.id,
-      (obj) => obj.name
+      (obj) => obj.name,
     );
     expect(map.size).toBe(3);
     expect(map.get(1)).toBe('Adam');

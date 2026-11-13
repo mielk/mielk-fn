@@ -1,105 +1,105 @@
 {
-	"name": "mielk-fn",
-	"version": "1.2.6",
-	"keywords": [],
-	"author": "mielk",
-	"description": "Generic functions used in various projects",
-	"type": "module",
-	"engines": {
-		"node": ">=24"
-	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"default": "./dist/index.js"
-		},
-		"./arrays": {
-			"types": "./dist/arrays/index.d.ts",
-			"import": "./dist/arrays/index.js",
-			"default": "./dist/arrays/index.js"
-		},
-		"./dates": {
-			"types": "./dist/dates/index.d.ts",
-			"import": "./dist/dates/index.js",
-			"default": "./dist/dates/index.js"
-		},
-		"./io": {
-			"types": "./dist/io/index.d.ts",
-			"import": "./dist/io/index.js",
-			"default": "./dist/io/index.js"
-		},
-		"./math": {
-			"types": "./dist/math/index.d.ts",
-			"import": "./dist/math/index.js",
-			"default": "./dist/math/index.js"
-		},
-		"./objects": {
-			"types": "./dist/objects/index.d.ts",
-			"import": "./dist/objects/index.js",
-			"default": "./dist/objects/index.js"
-		},
-		"./redis": {
-			"types": "./dist/redis/index.d.ts",
-			"import": "./dist/redis/index.js",
-			"default": "./dist/redis/index.js"
-		},
-		"./regex": {
-			"types": "./dist/regex/index.d.ts",
-			"import": "./dist/regex/index.js",
-			"default": "./dist/regex/index.js"
-		},
-		"./strings": {
-			"types": "./dist/strings/index.d.ts",
-			"import": "./dist/strings/index.js",
-			"default": "./dist/strings/index.js"
-		},
-		"./types": {
-			"types": "./dist/types/index.d.ts",
-			"import": "./dist/types/index.js",
-			"default": "./dist/types/index.js"
-		},
-		"./variables": {
-			"types": "./dist/variables/index.d.ts",
-			"import": "./dist/variables/index.js",
-			"default": "./dist/variables/index.js"
-		}
-	},
-	"scripts": {
-		"test": "jest --detectOpenHandles",
-		"build": "tsc",
-		"typecheck": "tsc --noEmit",
-		"lint": "eslint . --max-warnings 0",
-		"format": "prettier --write .",
-		"format:check": "prettier --check .",
-		"prepublishOnly": "npm test && npm run build",
-		"dev": "tsc --watch",
-		"release": "standard-version"
-	},
-	"license": "ISC",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/mielk/mielk-fn.git"
-	},
-	"homepage": "https://mielk.github.io/mielk-fn/",
-	"devDependencies": {
-		"@eslint/js": "10.0.1",
-		"@types/jest": "^30.0.0",
-		"eslint": "10.14.0",
-		"jest": "^30.3.0",
-		"jest-html-reporters": "^3.1.7",
-		"prettier": "3.10.1",
-		"standard-version": "^9.5.0",
-		"ts-jest": "^29.4.6",
-		"typescript": "^5.9.2",
-		"typescript-eslint": "8.72.2"
-	},
-	"files": [
-		"dist"
-	],
-	"dependencies": {
-		"redis": "^5.11.0"
-	}
+  "name": "mielk-fn",
+  "version": "1.2.6",
+  "keywords": [],
+  "author": "mielk",
+  "description": "Generic functions used in various projects",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./arrays": {
+      "types": "./dist/arrays/index.d.ts",
+      "import": "./dist/arrays/index.js",
+      "default": "./dist/arrays/index.js"
+    },
+    "./dates": {
+      "types": "./dist/dates/index.d.ts",
+      "import": "./dist/dates/index.js",
+      "default": "./dist/dates/index.js"
+    },
+    "./io": {
+      "types": "./dist/io/index.d.ts",
+      "import": "./dist/io/index.js",
+      "default": "./dist/io/index.js"
+    },
+    "./math": {
+      "types": "./dist/math/index.d.ts",
+      "import": "./dist/math/index.js",
+      "default": "./dist/math/index.js"
+    },
+    "./objects": {
+      "types": "./dist/objects/index.d.ts",
+      "import": "./dist/objects/index.js",
+      "default": "./dist/objects/index.js"
+    },
+    "./redis": {
+      "types": "./dist/redis/index.d.ts",
+      "import": "./dist/redis/index.js",
+      "default": "./dist/redis/index.js"
+    },
+    "./regex": {
+      "types": "./dist/regex/index.d.ts",
+      "import": "./dist/regex/index.js",
+      "default": "./dist/regex/index.js"
+    },
+    "./strings": {
+      "types": "./dist/strings/index.d.ts",
+      "import": "./dist/strings/index.js",
+      "default": "./dist/strings/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "default": "./dist/types/index.js"
+    },
+    "./variables": {
+      "types": "./dist/variables/index.d.ts",
+      "import": "./dist/variables/index.js",
+      "default": "./dist/variables/index.js"
+    }
+  },
+  "scripts": {
+    "test": "jest --detectOpenHandles",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepublishOnly": "npm test && npm run build",
+    "dev": "tsc --watch",
+    "release": "standard-version"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mielk/mielk-fn.git"
+  },
+  "homepage": "https://mielk.github.io/mielk-fn/",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/jest": "^30.0.0",
+    "eslint": "10.14.0",
+    "jest": "^30.3.0",
+    "jest-html-reporters": "^3.1.7",
+    "prettier": "3.10.1",
+    "standard-version": "^9.5.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "8.72.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "redis": "^5.11.0"
+  }
 }

@@ -1,4 +1,4 @@
 export type Range = {
-    min: number;
-    max: number;
-}
+  min: number;
+  max: number;
+};

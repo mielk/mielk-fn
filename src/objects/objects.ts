@@ -1,5 +1,5 @@
-import type { ObjectAny } from "../types/objects.js";
-import { isObject, isPlainObject } from "../variables/variables.js";
+import type { ObjectAny } from '../types/objects.js';
+import { isObject, isPlainObject } from '../variables/variables.js';
 
 type NumberStringFunction = (key: string, item: any) => number | string;
 
@@ -33,7 +33,7 @@ const merge = (objects: ObjectAny[], override: boolean = false): ObjectAny => {
  */
 function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
   obj: Record<T, U>,
-  ignoreDuplicatedKey = false
+  ignoreDuplicatedKey = false,
 ): Record<U, T> {
   if (!isObject(obj)) {
     throw new Error('Invalid input: the input must be an object.');

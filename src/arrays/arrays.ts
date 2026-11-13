@@ -1,8 +1,8 @@
 export const toMap = (
   items: any[],
   keyCallback: (item: any) => string | number,
-  valueCallback: ((item: any) => any) = (item) => item,
-  ignoreDuplicates = true
+  valueCallback: (item: any) => any = (item) => item,
+  ignoreDuplicates = true,
 ) => {
   const map = new Map();
   for (const item of items) {

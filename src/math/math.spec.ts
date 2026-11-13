@@ -1,4 +1,4 @@
-import { formatPercent, formatWithSign } from "./math";
+import { formatPercent, formatWithSign } from './math';
 
 describe('formatWithSign', () => {
   it('formats positive numbers with + sign', () => {

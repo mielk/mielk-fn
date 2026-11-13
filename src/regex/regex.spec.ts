@@ -1,4 +1,4 @@
-import { getCapturedNumber } from "./regex";
+import { getCapturedNumber } from './regex';
 
 describe('getCapturedNumber', () => {
   it('If there is a match, correct number should be returned', () => {

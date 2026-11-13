@@ -1,4 +1,4 @@
-import { formatDateDefault } from "./dates";
+import { formatDateDefault } from './dates';
 
 describe('formatDateDefault', () => {
   it('should return empty string for undefined', () => {

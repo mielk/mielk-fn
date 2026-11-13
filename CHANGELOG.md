@@ -6,17 +6,15 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.2.5](https://github.com/mielk/mielk-fn/compare/v1.2.4...v1.2.5) (2026-04-02)
 
-
 ### Bug Fixes
 
-* Specify .js in redisClient module path. ([e2d3f84](https://github.com/mielk/mielk-fn/commit/e2d3f84ffcf885396511121c9ca81ece2f22f8ef))
+- Specify .js in redisClient module path. ([e2d3f84](https://github.com/mielk/mielk-fn/commit/e2d3f84ffcf885396511121c9ca81ece2f22f8ef))
 
 ### [1.2.4](https://github.com/mielk/mielk-fn/compare/v1.2.3...v1.2.4) (2026-04-02)
 
-
 ### Bug Fixes
 
-* /redis addRedisKey method ([22873a6](https://github.com/mielk/mielk-fn/commit/22873a68a0e8e4e338a992848c516262543f436a))
+- /redis addRedisKey method ([22873a6](https://github.com/mielk/mielk-fn/commit/22873a68a0e8e4e338a992848c516262543f436a))
 
 ### [1.2.3](https://github.com/mielk/mielk-fn/compare/v1.2.2...v1.2.3) (2026-04-02)
 
@@ -36,10 +34,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.0.30](https://github.com/mielk/mielk-fn/compare/v1.0.29...v1.0.30) (2026-03-25)
 
-
 ### Bug Fixes
 
-* Add JSONFile type. ([614e50b](https://github.com/mielk/mielk-fn/commit/614e50b1ff8d9abf25851199b15432d7ea18b9f8))
+- Add JSONFile type. ([614e50b](https://github.com/mielk/mielk-fn/commit/614e50b1ff8d9abf25851199b15432d7ea18b9f8))
 
 ### [1.0.29](https://github.com/mielk/mielk-fn/compare/v1.0.28...v1.0.29) (2026-03-25)
 

@@ -1,9 +1,6 @@
 import { isArrayOfPrimitives, isObject, isPlainObject, isPrimitive, isStringOrNumber } from './variables.js';
 
-
-
 describe('isArrayOfPrimitives', () => {
-
   it('should return true for an array of numbers', () => {
     expect(isArrayOfPrimitives([1, 2, 3])).toBe(true);
   });
@@ -84,10 +81,9 @@ describe('isObject', () => {
   });
 
   test('should return false for a function', () => {
-    expect(isObject(() => { })).toBe(false);
+    expect(isObject(() => {})).toBe(false);
   });
 });
-
 
 describe('isPlainObject', () => {
   it('should return false for undefined', () => {
@@ -123,8 +119,16 @@ describe('isPlainObject', () => {
   });
 
   it('should return false for function', () => {
-    expect(isPlainObject(() => { return undefined })).toBeFalsy();
-    expect(isPlainObject(function () { return undefined })).toBeFalsy();
+    expect(
+      isPlainObject(() => {
+        return undefined;
+      }),
+    ).toBeFalsy();
+    expect(
+      isPlainObject(function () {
+        return undefined;
+      }),
+    ).toBeFalsy();
   });
 
   it('should return false for array', () => {
@@ -153,7 +157,7 @@ describe('isPlainObject', () => {
   });
 
   it('should return false for class instance', () => {
-    class Test { }
+    class Test {}
     expect(isPlainObject(new Test())).toBeFalsy();
   });
 
@@ -195,7 +199,6 @@ describe('isPlainObject', () => {
   it('should return true for object of objects', () => {
     expect(isPlainObject({ a: new Object(), b: [] })).toBeTruthy();
   });
-
 });
 
 describe('isPrimitive', () => {
@@ -243,7 +246,7 @@ describe('isPrimitive', () => {
   });
 
   test('should return false for function', () => {
-    expect(isPrimitive(() => { })).toBe(false);
+    expect(isPrimitive(() => {})).toBe(false);
   });
 });
 
@@ -304,7 +307,7 @@ describe('isStringOrNumber', () => {
   });
 
   test('should return false for a function', () => {
-    const func = () => { };
+    const func = () => {};
     expect(isStringOrNumber(func)).toBe(false);
   });
 });

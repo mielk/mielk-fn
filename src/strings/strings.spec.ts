@@ -43,7 +43,6 @@ describe('capitalizeFirst', () => {
     expect(capitalizeFirst('   123abc')).toBe('   123abc');
     expect(capitalizeFirst('   !test')).toBe('   !test');
   });
-
 });
 
 describe('collapseWhitespace', () => {
