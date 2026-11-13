@@ -33,7 +33,7 @@ function merge(objects: readonly unknown[], override = false): Record<string, un
  *
  * @param obj Object whose values are strings or numbers.
  * @param ignoreDuplicatedKey `true`: keep the first entry for a repeated value and skip the next ones;
- *   `false` (default): throw an error on a repeated value.
+ *   `false` (default): throw an error on a repeated value. Parameter added in 2.0.0.
  * @returns New object with the values of `obj` as keys and its keys as values.
  * @throws {Error} When `obj` is not an object, a value is neither a string nor a number, or a value repeats
  *   and `ignoreDuplicatedKey` is `false`.

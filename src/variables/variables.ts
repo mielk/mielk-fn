@@ -1,4 +1,8 @@
-/** A JavaScript primitive value. */
+/**
+ * A JavaScript primitive value.
+ *
+ * @since 2.0.0
+ */
 export type Primitive = string | number | boolean | bigint | symbol | null | undefined;
 
 /**

@@ -1,3 +1,5 @@
+// Module 'redis' (entry point 'mielk-fn/redis'). Shared Redis client of the process and key operations.
+// Environment: Node.js only; requires the optional peer dependency redis.
 import { getRedisClient, type RedisConfig } from './redis-client.js';
 import { addRedisKey, removeRedisKey } from './redis-actions.js';
 

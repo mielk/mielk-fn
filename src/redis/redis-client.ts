@@ -11,6 +11,8 @@ export type RedisConfig = {
   /**
    * Receives errors emitted by the client (e.g. a lost connection while it reconnects).
    * Without it these events are not reported; failed commands still reject their promises.
+   *
+   * @since 2.0.0
    */
   onError?: (error: Error) => void;
 };

@@ -19,6 +19,7 @@ export const capitalizeFirst = (str: string): string => {
  *
  * @param value Text to change.
  * @returns The text without leading and trailing whitespace and without repeated whitespace.
+ * @since 2.0.0 (replaces `clear`)
  */
 export const collapseWhitespace = (value: string): string => {
   const regex = /(^\s+|(?<=\s)\s|\s+$)/g;
