@@ -56,4 +56,12 @@ describe('formatDateDefault', () => {
 
     expect(date.getTime()).toBe(time);
   });
+
+  it('throws a RangeError for an invalid time zone', () => {
+    expect(() => formatDateDefault(new Date(0), 'Mars/Olympus')).toThrow(RangeError);
+  });
+
+  it('throws a RangeError for an invalid date', () => {
+    expect(() => formatDateDefault(new Date('invalid'))).toThrow(RangeError);
+  });
 });

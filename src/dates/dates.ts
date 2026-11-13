@@ -23,10 +23,11 @@ function getFormatter(timeZone: string): Intl.DateTimeFormat {
 /**
  * Formats a date as `YYYY-MM-DD HH:mm:ss` (24-hour clock) in a time zone.
  *
- * @param date Date to format; `undefined` gives an empty string.
+ * @param date Date to format; `undefined` gives an empty string. It must be a valid date.
  * @param timeZone IANA time zone name (default `Europe/Warsaw`).
  * @returns The formatted date, or `''` when `date` is `undefined`.
- * @throws {RangeError} When `timeZone` is not a valid time zone.
+ * @throws {RangeError} When `timeZone` is not a valid time zone, or `date` is an invalid date
+ *   (e.g. `new Date('invalid')`).
  */
 export function formatDateDefault(date: Date | undefined, timeZone = DEFAULT_TIME_ZONE): string {
   if (!date) return '';

@@ -8,6 +8,7 @@
  *   function is called repeatedly; a string is compiled on every call. The `g` and `y` flags are ignored.
  * @returns The integer from the first group, or `undefined` when there is no match, the group is empty or
  *   did not participate, or it does not start with a number.
+ * @throws {SyntaxError} When `pattern` is a string that is not a valid regular expression (e.g. `'('`).
  */
 export const getCapturedNumber = (input: string, pattern: string | RegExp): number | undefined => {
   const regex = typeof pattern === 'string' ? new RegExp(pattern) : withoutStatefulFlags(pattern);

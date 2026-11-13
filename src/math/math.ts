@@ -3,8 +3,10 @@
  * minus sign `−` (U+2212) for negative ones. A value that rounds to zero is shown without a sign.
  *
  * @param value Number to format.
- * @param decimals Number of decimals (default 0).
+ * @param decimals Number of decimals, from 0 to 100 (default 0).
  * @returns The formatted number, or `'NaN'` for `NaN`.
+ * @throws {RangeError} When `decimals` is less than 0 or greater than 100 and `value` is not `NaN`
+ *   (the limits of `Number.prototype.toFixed`).
  */
 export function formatWithSign(value: number, decimals = 0): string {
   if (isNaN(value)) return 'NaN';
@@ -20,9 +22,11 @@ export function formatWithSign(value: number, decimals = 0): string {
  * minus sign `−` (U+2212).
  *
  * @param value Fraction to format (1 is 100%).
- * @param decimals Number of decimals (default 0).
+ * @param decimals Number of decimals, from 0 to 100 (default 0).
  * @param plusPrefixForPositive Whether positive values get a `+` sign (default `false`).
- * @returns The formatted percentage.
+ * @returns The formatted percentage, or `'NaN%'` for `NaN`.
+ * @throws {RangeError} When `decimals` is less than 0 or greater than 100 and `value` is not `NaN`
+ *   (the limits of `Number.prototype.toFixed`).
  */
 export function formatPercent(value: number, decimals = 0, plusPrefixForPositive = false): string {
   if (!plusPrefixForPositive && value > 0) return (value * 100).toFixed(decimals) + '%';

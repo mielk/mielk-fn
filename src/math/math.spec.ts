@@ -60,6 +60,16 @@ describe('formatWithSign', () => {
     expect(formatWithSign(0.5)).toBe('+1');
     expect(formatWithSign(-0.006, 2)).toBe('−0.01');
   });
+
+  it('throws a RangeError when decimals is outside 0 to 100', () => {
+    expect(() => formatWithSign(1, -1)).toThrow(RangeError);
+    expect(() => formatWithSign(1, 101)).toThrow(RangeError);
+    expect(formatWithSign(1, 100)).toBe('+' + (1).toFixed(100));
+  });
+
+  it('returns NaN for NaN also when decimals is outside 0 to 100', () => {
+    expect(formatWithSign(NaN, -1)).toBe('NaN');
+  });
 });
 
 describe('formatPercent', () => {
@@ -117,5 +127,11 @@ describe('formatPercent', () => {
   it('handles Infinity', () => {
     expect(formatPercent(Infinity)).toBe('Infinity%');
     expect(formatPercent(-Infinity)).toBe('−Infinity%');
+  });
+
+  it('throws a RangeError when decimals is outside 0 to 100', () => {
+    expect(() => formatPercent(1, -1)).toThrow(RangeError);
+    expect(() => formatPercent(1, 101)).toThrow(RangeError);
+    expect(() => formatPercent(1, 101, true)).toThrow(RangeError);
   });
 });

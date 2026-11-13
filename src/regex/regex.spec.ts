@@ -33,4 +33,8 @@ describe('getCapturedNumber', () => {
   it('returns undefined when the group did not participate in the match', () => {
     expect(getCapturedNumber('value: x', /value: (?:([0-9]+)|x)/)).toBeUndefined();
   });
+
+  it('throws a SyntaxError for a pattern string that is not a valid regular expression', () => {
+    expect(() => getCapturedNumber('a', '(')).toThrow(SyntaxError);
+  });
 });
