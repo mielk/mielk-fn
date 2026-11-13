@@ -66,9 +66,9 @@ describe('invert', () => {
     expect(result).toEqual({ '1': '', '0': 'a', '-1': 'b' });
   });
 
-  it('keeps the first key for a repeated value by default', () => {
+  it('throws on a repeated value by default', () => {
     const obj = { a: 'x', b: 'y', c: 'x' };
-    expect(invert(obj)).toEqual({ x: 'a', y: 'b' });
+    expect(() => invert(obj)).toThrow("Duplicated key in the result: the value 'x' occurs more than once.");
   });
 
   it('keeps the first key for a repeated value when ignoreDuplicatedKey is true', () => {
@@ -78,7 +78,7 @@ describe('invert', () => {
 
   it('treats a number and its string form as the same key', () => {
     const obj = { a: 1, b: '1' };
-    expect(invert(obj)).toEqual({ '1': 'a' });
+    expect(invert(obj, true)).toEqual({ '1': 'a' });
     expect(() => invert(obj, false)).toThrow("Duplicated key in the result: the value '1' occurs more than once.");
   });
 

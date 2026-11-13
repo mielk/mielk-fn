@@ -25,15 +25,15 @@ const merge = (objects: ObjectAny[], override: boolean = false): ObjectAny => {
  * iteration order of `for...in` (integer-like keys first, ascending, then the other keys in insertion order).
  *
  * @param obj Object whose values are strings or numbers.
- * @param ignoreDuplicatedKey `true` (default): keep the first entry for a repeated value and skip the next ones;
- *   `false`: throw an error on a repeated value.
+ * @param ignoreDuplicatedKey `true`: keep the first entry for a repeated value and skip the next ones;
+ *   `false` (default): throw an error on a repeated value.
  * @returns New object with the values of `obj` as keys and its keys as values.
  * @throws {Error} When `obj` is not an object, a value is neither a string nor a number, or a value repeats
  *   and `ignoreDuplicatedKey` is `false`.
  */
 function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
   obj: Record<T, U>,
-  ignoreDuplicatedKey = true
+  ignoreDuplicatedKey = false
 ): Record<U, T> {
   if (!isObject(obj)) {
     throw new Error('Invalid input: the input must be an object.');
