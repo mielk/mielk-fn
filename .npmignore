@@ -1,6 +1,0 @@
-reports
-node_modules
-src
-tests
-*.ts
-*.map
