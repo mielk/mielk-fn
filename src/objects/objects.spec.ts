@@ -238,21 +238,21 @@ describe('modifyKeys', () => {
 
     it('should handle an object with duplicate modified keys', () => {
       const obj = { a: 1, b: 2, c: 3 };
-      const callback: NumberStringFunction = (key) => 'new_key';
+      const callback: NumberStringFunction = () => 'new_key';
       const result = modifyKeys(obj, callback, true);
       expect(result).toEqual({ new_key: 1 });
     });
 
     it('should handle an object with duplicate modified keys if ignoreDuplicates is false', () => {
       const obj = { a: 1, b: 2, c: 3 };
-      const callback: NumberStringFunction = (key) => 'new_key';
+      const callback: NumberStringFunction = () => 'new_key';
       const result = modifyKeys(obj, callback, false);
       expect(result).toEqual({ new_key: 3 });
     });
 
     it('should throw an error in strict mode if given a non-object value', () => {
       'use strict';
-      const callback: NumberStringFunction = (key: number | string) => 'new_key';
+      const callback: NumberStringFunction = () => 'new_key';
       const fn = () => {};
       expect(() => modifyKeys(undefined as any, callback)).toThrow(
         new TypeError('Invalid type of undefined. Expected JavaScript object'),

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getCapturedNumber } from './regex';
+import { getCapturedNumber } from './regex.js';
 
 describe('getCapturedNumber', () => {
   it('If there is a match, correct number should be returned', () => {

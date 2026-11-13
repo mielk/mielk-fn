@@ -1,5 +1,5 @@
-import { getRedisClient, RedisConfig } from './redisClient.js';
+import { getRedisClient, type RedisConfig } from './redisClient.js';
 import { addRedisKey, removeRedisKey } from './redisActions.js';
 
-export { getRedisClient, RedisConfig };
+export { getRedisClient, type RedisConfig };
 export { addRedisKey, removeRedisKey };

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatPercent, formatWithSign } from './math';
+import { formatPercent, formatWithSign } from './math.js';
 
 describe('formatWithSign', () => {
   it('formats positive numbers with + sign', () => {

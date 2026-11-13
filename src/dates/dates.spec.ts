@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDateDefault } from './dates';
+import { formatDateDefault } from './dates.js';
 
 describe('formatDateDefault', () => {
   it('should return empty string for undefined', () => {
@@ -19,17 +19,7 @@ describe('formatDateDefault', () => {
 
     const result = formatDateDefault(date);
 
-    const [datePart, timePart] = result.split(' ');
-
-    const [year, month, day] = datePart.split('-');
-    const [hour, minute, second] = timePart.split(':');
-
-    expect(year.length).toBe(4);
-    expect(month.length).toBe(2);
-    expect(day.length).toBe(2);
-    expect(hour.length).toBe(2);
-    expect(minute.length).toBe(2);
-    expect(second.length).toBe(2);
+    expect(result).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
   });
 
   it('should accept custom timeZone parameter', () => {

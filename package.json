@@ -70,13 +70,14 @@
   "scripts": {
     "test": "vitest run --coverage",
     "test:watch": "vitest",
-    "build": "tsc",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepublishOnly": "npm test && npm run build",
-    "dev": "tsc --watch",
+    "dev": "tsc -p tsconfig.build.json --watch",
     "release": "standard-version"
   },
   "license": "ISC",
