@@ -1,4 +1,4 @@
-import { capitalizeFirst, clear } from './strings.js';
+import { capitalizeFirst, collapseWhitespace } from './strings.js';
 
 describe('capitalizeFirst', () => {
   it('should capitalize first letter of a lowercase word', () => {
@@ -46,34 +46,34 @@ describe('capitalizeFirst', () => {
 
 });
 
-describe('clear', () => {
-  test('clear should remove leading and trailing spaces', () => {
-    expect(clear('  Hello world  ')).toBe('Hello world');
+describe('collapseWhitespace', () => {
+  test('collapseWhitespace should remove leading and trailing spaces', () => {
+    expect(collapseWhitespace('  Hello world  ')).toBe('Hello world');
   });
 
-  test('clear should remove multiple spaces inside the string', () => {
-    expect(clear('Hello    world')).toBe('Hello world');
+  test('collapseWhitespace should remove multiple spaces inside the string', () => {
+    expect(collapseWhitespace('Hello    world')).toBe('Hello world');
   });
 
-  test('clear should return the same string if no extra spaces', () => {
-    expect(clear('Hello world')).toBe('Hello world');
+  test('collapseWhitespace should return the same string if no extra spaces', () => {
+    expect(collapseWhitespace('Hello world')).toBe('Hello world');
   });
 
-  test('clear should return empty string if input string contains only spaces', () => {
-    expect(clear('     ')).toBe('');
+  test('collapseWhitespace should return empty string if input string contains only spaces', () => {
+    expect(collapseWhitespace('     ')).toBe('');
   });
 
-  test('clear should throw an error if input is not a string', () => {
+  test('collapseWhitespace should throw an error if input is not a string', () => {
     expect(() => {
-      clear(123 as unknown as string);
+      collapseWhitespace(123 as unknown as string);
     }).toThrow();
   });
 
-  test('clear should handle string with only one word correctly', () => {
-    expect(clear('    Hello    ')).toBe('Hello');
+  test('collapseWhitespace should handle string with only one word correctly', () => {
+    expect(collapseWhitespace('    Hello    ')).toBe('Hello');
   });
 
-  test('clear should handle empty string correctly', () => {
-    expect(clear('')).toBe('');
+  test('collapseWhitespace should handle empty string correctly', () => {
+    expect(collapseWhitespace('')).toBe('');
   });
 });
