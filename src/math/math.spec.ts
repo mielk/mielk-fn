@@ -37,7 +37,27 @@ describe('formatWithSign', () => {
   });
 
   it('handles very small numbers', () => {
-    expect(formatWithSign(1e-10, 0)).toBe('+0');
+    expect(formatWithSign(1e-10, 0)).toBe('0');
+  });
+
+  it('returns zero without sign when a positive value rounds to zero', () => {
+    expect(formatWithSign(0.2)).toBe('0');
+    expect(formatWithSign(0.004, 2)).toBe('0.00');
+  });
+
+  it('returns zero without sign when a negative value rounds to zero', () => {
+    expect(formatWithSign(-0.2)).toBe('0');
+    expect(formatWithSign(-0.004, 2)).toBe('0.00');
+  });
+
+  it('returns zero without sign for negative zero', () => {
+    expect(formatWithSign(-0)).toBe('0');
+    expect(formatWithSign(-0, 2)).toBe('0.00');
+  });
+
+  it('keeps the sign when the rounded value is not zero', () => {
+    expect(formatWithSign(0.5)).toBe('+1');
+    expect(formatWithSign(-0.006, 2)).toBe('−0.01');
   });
 });
 
@@ -68,6 +88,12 @@ describe('formatPercent', () => {
 
   it('handles zero with fraction and plus flag (still no sign)', () => {
     expect(formatPercent(0, 2, true)).toBe('0.00%');
+  });
+
+  it('returns zero without sign when a value rounds to zero', () => {
+    expect(formatPercent(-0.001)).toBe('0%');
+    expect(formatPercent(0.001, 0, true)).toBe('0%');
+    expect(formatPercent(-0.00001, 2)).toBe('0.00%');
   });
 
   it('respects decimals', () => {

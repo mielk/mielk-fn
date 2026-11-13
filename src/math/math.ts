@@ -1,7 +1,8 @@
 export function formatWithSign(value: number, decimals = 0): string {
-	const rounded = value.toFixed(decimals);
 	if (isNaN(value)) return 'NaN';
-	if (value === 0) return rounded;
+	const rounded = value.toFixed(decimals);
+	// A value that rounds to zero (e.g. 0.2 or -0.2 with no decimals) is shown without a sign.
+	if (Number(rounded) === 0) return (0).toFixed(decimals);
 	if (value > 0) return '+' + rounded;
 	return '−' + rounded.substring(1);
 }
