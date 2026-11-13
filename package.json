@@ -76,9 +76,10 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:package",
     "dev": "tsc -p tsconfig.build.json --watch",
-    "release": "standard-version"
+    "release": "standard-version",
+    "check:package": "publint --strict && attw --pack . --profile esm-only"
   },
   "license": "MIT",
   "repository": {
@@ -87,11 +88,14 @@
   },
   "homepage": "https://github.com/mielk/mielk-fn#readme",
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
     "@eslint/js": "10.0.1",
     "@types/node": "24.19.2",
     "@vitest/coverage-v8": "5.1.0",
     "eslint": "10.14.0",
     "prettier": "3.10.1",
+    "publint": "0.3.25",
+    "redis": "5.11.0",
     "standard-version": "^9.5.0",
     "typescript": "5.9.2",
     "typescript-eslint": "8.72.2",
@@ -100,7 +104,13 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "redis": "^5.11.0"
-  }
+  "peerDependencies": {
+    "redis": "^5"
+  },
+  "peerDependenciesMeta": {
+    "redis": {
+      "optional": true
+    }
+  },
+  "sideEffects": false
 }
