@@ -15,4 +15,8 @@ describe('getCapturedNumber', () => {
     const result = getCapturedNumber(input, pattern);
     expect(result).toBe(undefined);
   });
+
+  it('returns undefined when the captured group is not a number', () => {
+    expect(getCapturedNumber('Current value: abc;', 'value: ([a-z]+)')).toBeUndefined();
+  });
 });
