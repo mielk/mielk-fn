@@ -9,7 +9,7 @@ describe('toMap', () => {
   ];
   const primitives = ['Adam', 'Bartek', 'Czesiek'];
 
-  it('should create a map from an array of objects', () => {
+  it('creates a map from an array of objects', () => {
     const map = toMap(objects, (obj) => obj.id);
     expect(map.size).toBe(3);
     expect(map.get(1)).toEqual(objects[0]);
@@ -17,7 +17,7 @@ describe('toMap', () => {
     expect(map.get(5)).toEqual(objects[2]);
   });
 
-  it('should create a map from an array of primitives', () => {
+  it('creates a map from an array of primitives', () => {
     const map = toMap(primitives, (str) => str.charAt(0));
     expect(map.size).toBe(3);
     expect(map.get('A')).toEqual(primitives[0]);
@@ -25,7 +25,7 @@ describe('toMap', () => {
     expect(map.get('C')).toEqual(primitives[2]);
   });
 
-  it('should allow custom value callback', () => {
+  it('allows custom value callback', () => {
     const map = toMap(
       objects,
       (obj) => obj.id,
@@ -61,7 +61,7 @@ describe('toMap', () => {
     expect(map.get(1)).toEqual({ name: 'Bartek', id: 1 });
   });
 
-  it('should ignore duplicate keys by default', () => {
+  it('ignores duplicate keys by default', () => {
     const objectsWithDuplicate = [
       { name: 'Adam', id: 1 },
       { name: 'Bartek', id: 4 },
@@ -75,7 +75,7 @@ describe('toMap', () => {
 });
 
 describe('toIndexedArray', () => {
-  it('should return an indexed array with basic objects', () => {
+  it('returns an indexed array with basic objects', () => {
     const items = [
       { name: 'Adam', id: 1 },
       { name: 'Bartek', id: 4 },
@@ -89,7 +89,7 @@ describe('toIndexedArray', () => {
     expect(result[5]).toEqual({ name: 'Czesiek', id: 5 });
   });
 
-  it('should handle custom class instances', () => {
+  it('handles custom class instances', () => {
     class Person {
       fullName: string;
       id: number;
@@ -115,7 +115,7 @@ describe('toIndexedArray', () => {
     expect(result[5]).toEqual(new Person('Czesiek', 5));
   });
 
-  it('should throw an error when the callback returns a non-number value', () => {
+  it('throws an error when the callback returns a non-number value', () => {
     const items = [
       { name: 'Adam', id: '1' },
       { name: 'Bartek', id: '4' },
@@ -127,7 +127,7 @@ describe('toIndexedArray', () => {
     expect(() => toIndexedArray(items, callback)).toThrow(new TypeError('Callback should return a number.'));
   });
 
-  it('should handle an empty array', () => {
+  it('handles an empty array', () => {
     const items: { id: number }[] = [];
     const result = toIndexedArray(items, (item) => item.id);
     expect(result).toEqual([]);

@@ -106,7 +106,7 @@ describe('getRedisClient', () => {
   });
 });
 
-describe('client error events', () => {
+describe('getRedisClient error events', () => {
   const emitError = (error: Error) => {
     const listener = fakeClient.on.mock.calls.find(([event]) => event === 'error')?.[1] as (error: Error) => void;
     listener(error);

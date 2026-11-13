@@ -2,14 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { getCapturedNumber } from './regex.js';
 
 describe('getCapturedNumber', () => {
-  it('If there is a match, correct number should be returned', () => {
+  it('returns the captured number when the pattern matches', () => {
     const pattern: string = 'value: (\\d+)';
     const input: string = 'Current value: 123;';
     const result = getCapturedNumber(input, pattern);
     expect(result).toBe(123);
   });
 
-  it('If there is no match, undefined is returned', () => {
+  it('returns undefined when the pattern does not match', () => {
     const pattern: string = 'value: (d+)';
     const input: string = 'Current value: 123;';
     const result = getCapturedNumber(input, pattern);

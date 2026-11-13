@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { formatDateDefault } from './dates.js';
 
 describe('formatDateDefault', () => {
-  it('should return empty string for undefined', () => {
+  it('returns empty string for undefined', () => {
     expect(formatDateDefault(undefined)).toBe('');
   });
 
-  it('should return string in format YYYY-MM-DD HH:mm:ss', () => {
+  it('returns string in format YYYY-MM-DD HH:mm:ss', () => {
     const date = new Date('2024-01-02T03:04:05Z');
 
     const result = formatDateDefault(date);
@@ -14,7 +14,7 @@ describe('formatDateDefault', () => {
     expect(result).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
   });
 
-  it('should always have 2-digit month, day, hour, minute, second', () => {
+  it('always has 2-digit month, day, hour, minute, second', () => {
     const date = new Date('2024-04-05T06:07:08Z');
 
     const result = formatDateDefault(date);
@@ -22,7 +22,7 @@ describe('formatDateDefault', () => {
     expect(result).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
   });
 
-  it('should accept custom timeZone parameter', () => {
+  it('accepts custom timeZone parameter', () => {
     const date = new Date('2024-01-02T03:04:05Z');
 
     const result = formatDateDefault(date, 'UTC');
@@ -30,7 +30,7 @@ describe('formatDateDefault', () => {
     expect(result).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
   });
 
-  it('should still return valid structure for different time zones', () => {
+  it('still returns a valid structure for different time zones', () => {
     const date = new Date('2024-06-15T10:20:30Z');
 
     const resultWarsaw = formatDateDefault(date, 'Europe/Warsaw');
@@ -42,13 +42,13 @@ describe('formatDateDefault', () => {
     expect(resultWarsaw).not.toBe(resultUTC);
   });
 
-  it('should be deterministic', () => {
+  it('is deterministic', () => {
     const date = new Date('2024-06-15T10:20:30Z');
 
     expect(formatDateDefault(date)).toBe(formatDateDefault(date));
   });
 
-  it('should not mutate input date', () => {
+  it('does not mutate input date', () => {
     const date = new Date('2024-01-01T00:00:00Z');
     const time = date.getTime();
 
