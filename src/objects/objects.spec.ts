@@ -136,6 +136,27 @@ describe('isNonEmptyObject', () => {
   });
 });
 
+describe('own keys', () => {
+  it('invert writes a __proto__ value as an own key without changing the prototype', () => {
+    const result = invert({ a: '__proto__' });
+    expect(Object.getPrototypeOf(result)).toBe(Object.prototype);
+    expect(Object.hasOwn(result, '__proto__')).toBe(true);
+  });
+
+  it('modifyKeys writes a __proto__ key as an own key without changing the prototype', () => {
+    const result = modifyKeys({ a: { polluted: true } }, () => '__proto__');
+    expect(Object.getPrototypeOf(result)).toBe(Object.prototype);
+    expect(Object.hasOwn(result, '__proto__')).toBe(true);
+    expect(result).not.toHaveProperty('polluted');
+  });
+
+  it('modifyKeys names null in the error message', () => {
+    expect(() => modifyKeys(null as unknown as Record<string, unknown>, (key) => key)).toThrow(
+      new TypeError('Invalid type of null. Expected JavaScript object'),
+    );
+  });
+});
+
 describe('merge', () => {
   test('Empty array', () => {
     const result = merge([]);
@@ -267,34 +288,18 @@ describe('modifyKeys', () => {
       'use strict';
       const callback: NumberStringFunction = () => 'new_key';
       const fn = () => {};
-      expect(() => modifyKeys(undefined as any, callback)).toThrow(
-        new TypeError('Invalid type of undefined. Expected JavaScript object'),
-      );
-      expect(() => modifyKeys(123 as any, callback)).toThrow(
-        new TypeError('Invalid type of Number. Expected JavaScript object'),
-      );
-      expect(() => modifyKeys('string' as any, callback)).toThrow(
-        new TypeError('Invalid type of String. Expected JavaScript object'),
-      );
-      expect(() => modifyKeys(Symbol() as any, callback)).toThrow(
-        new TypeError('Invalid type of Symbol. Expected JavaScript object'),
-      );
-      expect(() => modifyKeys(true as any, callback)).toThrow(
-        new TypeError('Invalid type of Boolean. Expected JavaScript object'),
-      );
-      expect(() => modifyKeys(fn as any, callback)).toThrow(
-        new TypeError('Invalid type of Function. Expected JavaScript object'),
-      );
-      expect(() => modifyKeys([] as any, callback)).toThrow(
-        new TypeError('Invalid type of Array. Expected JavaScript object'),
-      );
-      expect(() => modifyKeys(new Date() as any, callback)).toThrow(
-        new TypeError(`Invalid type of Date. Expected JavaScript object`),
-      );
+      // Simulates callers without type checking: the runtime check rejects non-plain objects.
+      const modify = (value: unknown) => () => modifyKeys(value as Record<string, unknown>, callback);
+      expect(modify(undefined)).toThrow(new TypeError('Invalid type of undefined. Expected JavaScript object'));
+      expect(modify(123)).toThrow(new TypeError('Invalid type of Number. Expected JavaScript object'));
+      expect(modify('string')).toThrow(new TypeError('Invalid type of String. Expected JavaScript object'));
+      expect(modify(Symbol())).toThrow(new TypeError('Invalid type of Symbol. Expected JavaScript object'));
+      expect(modify(true)).toThrow(new TypeError('Invalid type of Boolean. Expected JavaScript object'));
+      expect(modify(fn)).toThrow(new TypeError('Invalid type of Function. Expected JavaScript object'));
+      expect(modify([])).toThrow(new TypeError('Invalid type of Array. Expected JavaScript object'));
+      expect(modify(new Date())).toThrow(new TypeError(`Invalid type of Date. Expected JavaScript object`));
       class MyClass {}
-      expect(() => modifyKeys(new MyClass() as any, callback)).toThrow(
-        new TypeError(`Invalid type of MyClass. Expected JavaScript object`),
-      );
+      expect(modify(new MyClass())).toThrow(new TypeError(`Invalid type of MyClass. Expected JavaScript object`));
     });
   });
 });

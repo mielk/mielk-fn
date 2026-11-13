@@ -1,7 +1,4 @@
-import type { ObjectAny } from '../types/objects.js';
 import { isObject, isPlainObject } from '../variables/variables.js';
-
-type NumberStringFunction = (key: string, item: any) => number | string;
 
 type InvertAllowedTypes = string | number;
 
@@ -49,40 +46,66 @@ function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
     throw new Error('Invalid input: the input must be an object.');
   }
 
-  const inverted = {} as Record<U, T>;
+  // Keyed by the string form of the value, as object keys are: 1 and '1' are the same key.
+  const inverted = new Map<string, T>();
   for (const key in obj) {
     const value = obj[key];
     if (typeof value !== 'string' && typeof value !== 'number') {
       throw new Error('Invalid value type: the value must be a string or a number.');
     }
-    if (Object.prototype.hasOwnProperty.call(inverted, value)) {
+    if (inverted.has(String(value))) {
       if (ignoreDuplicatedKey) continue;
       throw new Error(`Duplicated key in the result: the value '${value}' occurs more than once.`);
     }
-    inverted[value] = key;
+    inverted.set(String(value), key);
   }
 
-  return inverted;
+  // Built from entries, so a value such as '__proto__' becomes an own key and does not set the prototype.
+  return Object.fromEntries(inverted) as Record<U, T>;
 }
 
-const modifyKeys = (obj: ObjectAny, callback: NumberStringFunction, ignoreDuplicates = true): ObjectAny => {
-  if (!isPlainObject(obj)) throw new TypeError(`Invalid type of ${obj?.constructor.name}. Expected JavaScript object`);
-  const entries = Object.entries(obj || {});
-  const result: ObjectAny = {};
-  entries.forEach(([key, value]) => {
-    const newKey: string | number = callback(key, value);
-    if (!result.hasOwnProperty(newKey) || !ignoreDuplicates) {
-      result[newKey] = value;
+/**
+ * Returns a copy of a plain object with each key replaced by the result of a callback.
+ *
+ * @param obj Plain object (object literal, `new Object()` or `Object.create(null)`).
+ * @param callback Returns the new key for a key and its value.
+ * @param ignoreDuplicates `true` (default): when several keys map to the same new key, the first one wins;
+ *   `false`: the last one wins.
+ * @returns New object with the new keys and the original values; keys are own properties, also `__proto__`.
+ * @throws {TypeError} When `obj` is not a plain object.
+ */
+const modifyKeys = <V>(
+  obj: Readonly<Record<string, V>>,
+  callback: (key: string, value: V) => string | number,
+  ignoreDuplicates = true,
+): Record<string, V> => {
+  if (!isPlainObject(obj)) throw new TypeError(`Invalid type of ${typeName(obj)}. Expected JavaScript object`);
+  const result = new Map<string, V>();
+  for (const [key, value] of Object.entries(obj)) {
+    const newKey = String(callback(key, value));
+    if (!result.has(newKey) || !ignoreDuplicates) {
+      result.set(newKey, value);
     }
-  });
-  return result;
+  }
+  return Object.fromEntries(result);
 };
 
-const isNonEmptyObject = (value: any): value is object => {
+/**
+ * Checks whether a value is an object other than an array with at least one own enumerable key.
+ *
+ * @param value Value to check.
+ * @returns `true` for a non-empty object.
+ */
+const isNonEmptyObject = (value: unknown): value is object => {
   if (!isObject(value)) return false;
   return Object.keys(value).length > 0;
 };
 
-export { invert, isNonEmptyObject, merge, modifyKeys };
+/** Name of the value's type for error messages: the constructor name, or `null` / `undefined`. */
+const typeName = (value: unknown): string => {
+  if (value === null || value === undefined) return String(value);
+  const boxed = Object(value) as object;
+  return boxed.constructor.name;
+};
 
-export default { invert, isNonEmptyObject, merge, modifyKeys };
+export { invert, isNonEmptyObject, merge, modifyKeys };
