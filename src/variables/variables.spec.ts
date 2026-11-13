@@ -216,19 +216,19 @@ describe('isPrimitive', () => {
     expect(isPrimitive(false)).toBe(true);
   });
 
-  it('returns true for null if includeNullAndUndefined is set to false', () => {
+  it('returns true for null if includeNullAndUndefined is set to true', () => {
     expect(isPrimitive(null, true)).toBe(true);
   });
 
-  it('returns true for undefined if includeNullAndUndefined is set to false', () => {
+  it('returns true for undefined if includeNullAndUndefined is set to true', () => {
     expect(isPrimitive(undefined, true)).toBe(true);
   });
 
-  it('returns false for null if includeNullAndUndefined is set to true', () => {
+  it('returns false for null if includeNullAndUndefined is set to false', () => {
     expect(isPrimitive(null, false)).toBe(false);
   });
 
-  it('returns false for undefined if includeNullAndUndefined is set to true', () => {
+  it('returns false for undefined if includeNullAndUndefined is set to false', () => {
     expect(isPrimitive(undefined, false)).toBe(false);
   });
 
