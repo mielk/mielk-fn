@@ -102,6 +102,14 @@ Changes are listed by hand in [CHANGELOG.md](CHANGELOG.md) under `Unreleased`; i
 between major versions. `npm version <major|minor|patch>` moves the entries to the new version
 (`scripts/release-changelog.js`) and creates the release commit and tag.
 
+## Documentation scope
+
+Deviation from the documentation standard (`doc:SCP-1`, `doc:SCP-4`), approved by the user on 2026-11-13
+(TASK-188): the library has no generated user and technical documentation sites, API reference or agent
+documentation (`doc/agent/CORE.md`), because no documentation generator for TypeScript exists yet. Until it does,
+this README, the TSDoc comments of every export and [CHANGELOG.md](CHANGELOG.md) are the complete documentation.
+The generator is planned as a separate task for all mielk libraries.
+
 ## License
 
 [MIT](LICENSE)
