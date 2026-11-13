@@ -18,7 +18,23 @@ const merge = (objects: ObjectAny[], override: boolean = false): ObjectAny => {
   return merged;
 };
 
-function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(obj: Record<T, U>): Record<U, T> {
+/**
+ * Swaps keys and values of an object.
+ *
+ * Several keys with the same value would give the same key in the result. The entries are processed in the
+ * iteration order of `for...in` (integer-like keys first, ascending, then the other keys in insertion order).
+ *
+ * @param obj Object whose values are strings or numbers.
+ * @param ignoreDuplicatedKey `true` (default): keep the first entry for a repeated value and skip the next ones;
+ *   `false`: throw an error on a repeated value.
+ * @returns New object with the values of `obj` as keys and its keys as values.
+ * @throws {Error} When `obj` is not an object, a value is neither a string nor a number, or a value repeats
+ *   and `ignoreDuplicatedKey` is `false`.
+ */
+function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
+  obj: Record<T, U>,
+  ignoreDuplicatedKey = true
+): Record<U, T> {
   if (!isObject(obj)) {
     throw new Error('Invalid input: the input must be an object.');
   }
@@ -28,6 +44,10 @@ function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(obj:
     const value = obj[key];
     if (typeof value !== 'string' && typeof value !== 'number') {
       throw new Error('Invalid value type: the value must be a string or a number.');
+    }
+    if (Object.prototype.hasOwnProperty.call(inverted, value)) {
+      if (ignoreDuplicatedKey) continue;
+      throw new Error(`Duplicated key in the result: the value '${value}' occurs more than once.`);
     }
     inverted[value] = key;
   }

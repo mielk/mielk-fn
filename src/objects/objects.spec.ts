@@ -65,6 +65,37 @@ describe('invert', () => {
     const result = invert(obj);
     expect(result).toEqual({ '1': '', '0': 'a', '-1': 'b' });
   });
+
+  it('keeps the first key for a repeated value by default', () => {
+    const obj = { a: 'x', b: 'y', c: 'x' };
+    expect(invert(obj)).toEqual({ x: 'a', y: 'b' });
+  });
+
+  it('keeps the first key for a repeated value when ignoreDuplicatedKey is true', () => {
+    const obj = { a: 1, b: 2, c: 1, d: 1 };
+    expect(invert(obj, true)).toEqual({ '1': 'a', '2': 'b' });
+  });
+
+  it('treats a number and its string form as the same key', () => {
+    const obj = { a: 1, b: '1' };
+    expect(invert(obj)).toEqual({ '1': 'a' });
+    expect(() => invert(obj, false)).toThrow("Duplicated key in the result: the value '1' occurs more than once.");
+  });
+
+  it('throws on a repeated value when ignoreDuplicatedKey is false', () => {
+    const obj = { a: 'x', b: 'y', c: 'x' };
+    expect(() => invert(obj, false)).toThrow("Duplicated key in the result: the value 'x' occurs more than once.");
+  });
+
+  it('does not throw without repeated values when ignoreDuplicatedKey is false', () => {
+    const obj = { a: 'x', b: 'y' };
+    expect(invert(obj, false)).toEqual({ x: 'a', y: 'b' });
+  });
+
+  it('does not treat inherited Object properties as existing keys', () => {
+    const obj = { a: 'toString', b: 'constructor' };
+    expect(invert(obj, false)).toEqual({ toString: 'a', constructor: 'b' });
+  });
 });
 
 describe('isNonEmptyObject', () => {
