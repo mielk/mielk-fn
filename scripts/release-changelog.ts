@@ -1,7 +1,8 @@
 // Version lifecycle script of `npm version` (npm:WYD-1, npm:CHG-1, npm:CHG-2): moves the entries of
 // `## [Unreleased]` in CHANGELOG.md to a new section `## [<version>] - <YYYY-MM-DD>` right below it.
 // npm sets npm_package_version to the new version before it runs the script; the `version` script
-// then adds CHANGELOG.md to the release commit.
+// then adds CHANGELOG.md to the release commit. Node.js 24 runs this TypeScript file directly by stripping
+// its types, so the file uses only erasable syntax and imports nothing but Node.js modules.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -10,13 +11,13 @@ const UNRELEASED = '## [Unreleased]';
 /**
  * Returns the changelog with the Unreleased entries moved to a section of the given version.
  *
- * @param {string} changelog Content of CHANGELOG.md.
- * @param {string} version The released version, e.g. `2.0.0`.
- * @param {string} date Release date as `YYYY-MM-DD`.
- * @returns {string} The new content; Unreleased stays as an empty section on top.
+ * @param changelog Content of CHANGELOG.md.
+ * @param version The released version, e.g. `2.0.0`.
+ * @param date Release date as `YYYY-MM-DD`.
+ * @returns The new content; Unreleased stays as an empty section on top.
  * @throws {Error} When there is no Unreleased section, it has no entry, or the version is already listed.
  */
-export const releaseChangelog = (changelog, version, date) => {
+export const releaseChangelog = (changelog: string, version: string, date: string): string => {
   const start = changelog.indexOf(UNRELEASED);
   if (start === -1) throw new Error(`CHANGELOG.md has no "${UNRELEASED}" section.`);
   if (changelog.includes(`## [${version}]`)) throw new Error(`CHANGELOG.md already has a section for ${version}.`);

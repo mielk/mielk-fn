@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-// @ts-expect-error The release script is plain JavaScript without declarations.
-import { releaseChangelog as releaseChangelogUntyped } from './release-changelog.js';
-
-const releaseChangelog = releaseChangelogUntyped as (changelog: string, version: string, date: string) => string;
+import { releaseChangelog } from './release-changelog.js';
 
 const HEADER = '# Changelog\n\nIntro.\n\n';
 const OLD = '## [1.0.0] - 2026-01-01\n\n### Fixed\n\n- Old fix.\n';

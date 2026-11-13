@@ -79,7 +79,7 @@
     "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:package",
     "dev": "tsc -p tsconfig.build.json --watch",
     "check:package": "publint --strict && attw --pack . --profile esm-only",
-    "version": "node scripts/release-changelog.js && git add CHANGELOG.md"
+    "version": "node scripts/release-changelog.ts && git add CHANGELOG.md"
   },
   "license": "MIT",
   "repository": {

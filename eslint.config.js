@@ -10,7 +10,7 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: { allowDefaultProject: ['*.js', 'scripts/*.js'] },
+        projectService: { allowDefaultProject: ['*.js'] },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -33,8 +33,7 @@ export default tseslint.config(
   },
   {
     // Repository scripts run by npm in Node.js; they are not part of the library and read npm_package_* variables.
-    files: ['scripts/**/*.js'],
-    languageOptions: { globals: { process: 'readonly' } },
+    files: ['scripts/**/*.ts'],
     rules: { 'no-restricted-properties': 'off' },
   },
 );

@@ -100,7 +100,7 @@ Unit tests do not connect to Redis: the `redis` module is replaced by a test dou
 
 Changes are listed by hand in [CHANGELOG.md](CHANGELOG.md) under `Unreleased`; it also holds the migration notes
 between major versions. `npm version <major|minor|patch>` moves the entries to the new version
-(`scripts/release-changelog.js`) and creates the release commit and tag.
+(`scripts/release-changelog.ts`, run by Node.js directly) and creates the release commit and tag.
 
 ## Documentation scope
 
