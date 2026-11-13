@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, expectTypeOf, it } from 'vitest';
 import { invert, isNonEmptyObject, merge, modifyKeys } from './objects.js';
 
 describe('invert', () => {
@@ -12,6 +12,14 @@ describe('invert', () => {
     const input = { 1: 2, 3: 4 };
     const result = invert(input);
     expect(result).toEqual({ 2: '1', 4: '3' });
+  });
+
+  it('types the values of the result as strings also for numeric keys', () => {
+    const result = invert({ 1: 'a', 2: 'b' });
+    expectTypeOf(result.a).toEqualTypeOf<'1' | '2'>();
+    // @ts-expect-error The value of a numeric key is the string '1', not a number.
+    const value: number = result.a;
+    expect(typeof value).toBe('string');
   });
 
   it('swaps mixed string and number keys and values', () => {

@@ -34,20 +34,21 @@ function merge(objects: readonly unknown[], override = false): Record<string, un
  * @param obj Object whose values are strings or numbers.
  * @param ignoreDuplicatedKey `true`: keep the first entry for a repeated value and skip the next ones;
  *   `false` (default): throw an error on a repeated value. Parameter added in 2.0.0.
- * @returns New object with the values of `obj` as keys and its keys as values.
+ * @returns New object with the values of `obj` as keys and its keys as values. The values are always strings,
+ *   also for numeric keys of `obj` (`invert({ 1: 'a' })` gives `{ a: '1' }`), because object keys are strings.
  * @throws {Error} When `obj` is not an object, a value is neither a string nor a number, or a value repeats
  *   and `ignoreDuplicatedKey` is `false`.
  */
 function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
   obj: Record<T, U>,
   ignoreDuplicatedKey = false,
-): Record<U, T> {
+): Record<U, `${T}`> {
   if (!isObject(obj)) {
     throw new Error('Invalid input: the input must be an object.');
   }
 
   // Keyed by the string form of the value, as object keys are: 1 and '1' are the same key.
-  const inverted = new Map<string, T>();
+  const inverted = new Map<string, string>();
   for (const key in obj) {
     const value = obj[key];
     if (typeof value !== 'string' && typeof value !== 'number') {
@@ -61,7 +62,9 @@ function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
   }
 
   // Built from entries, so a value such as '__proto__' becomes an own key and does not set the prototype.
-  return Object.fromEntries(inverted) as Record<U, T>;
+  // The cast restores the key types that Object.fromEntries widens to string: every value was checked above
+  // to be the string or number of type U, and every key comes from for...in over obj, i.e. the string form of T.
+  return Object.fromEntries(inverted) as Record<U, `${T}`>;
 }
 
 /**
