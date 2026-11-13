@@ -78,8 +78,8 @@
     "format:check": "prettier --check .",
     "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:package",
     "dev": "tsc -p tsconfig.build.json --watch",
-    "release": "standard-version",
-    "check:package": "publint --strict && attw --pack . --profile esm-only"
+    "check:package": "publint --strict && attw --pack . --profile esm-only",
+    "version": "node scripts/release-changelog.js && git add CHANGELOG.md"
   },
   "license": "MIT",
   "repository": {
@@ -96,7 +96,6 @@
     "prettier": "3.10.1",
     "publint": "0.3.25",
     "redis": "5.11.0",
-    "standard-version": "^9.5.0",
     "typescript": "5.9.2",
     "typescript-eslint": "8.72.2",
     "vitest": "5.1.0"

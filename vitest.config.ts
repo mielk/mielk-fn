@@ -7,7 +7,7 @@ import { defineConfig } from 'vitest/config';
 // coverage/.tmp while Vitest removes it, and the run fails with EBUSY although all tests pass.
 export default defineConfig({
   test: {
-    include: ['src/**/*.spec.ts'],
+    include: ['src/**/*.spec.ts', 'scripts/**/*.spec.ts'],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.ts'],
