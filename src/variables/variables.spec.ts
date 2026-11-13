@@ -1,3 +1,4 @@
+import { describe, expect, it, test } from 'vitest';
 import { isArrayOfPrimitives, isObject, isPlainObject, isPrimitive, isStringOrNumber } from './variables.js';
 
 describe('isArrayOfPrimitives', () => {

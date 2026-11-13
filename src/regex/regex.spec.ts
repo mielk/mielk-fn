@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { getCapturedNumber } from './regex';
 
 describe('getCapturedNumber', () => {

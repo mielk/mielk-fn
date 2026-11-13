@@ -1,3 +1,4 @@
+import { describe, expect, it, test } from 'vitest';
 import { capitalizeFirst, collapseWhitespace } from './strings.js';
 
 describe('capitalizeFirst', () => {

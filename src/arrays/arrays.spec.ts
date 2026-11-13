@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { toIndexedArray, toMap } from './arrays.js';
 
 describe('toMap', () => {

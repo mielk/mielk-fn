@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import * as root from './index.js';
 import * as arrays from './arrays/index.js';
 import * as dates from './dates/index.js';

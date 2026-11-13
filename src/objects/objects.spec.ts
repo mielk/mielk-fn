@@ -1,3 +1,4 @@
+import { describe, expect, it, test } from 'vitest';
 import { invert, isNonEmptyObject, merge, modifyKeys } from './objects.js';
 
 describe('invert', () => {
