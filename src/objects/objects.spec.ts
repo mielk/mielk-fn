@@ -175,6 +175,11 @@ describe('merge', () => {
     const result = merge([{ a: 1 }, { a: 2 }, { a: 3 }], true);
     expect(result).toEqual({ a: 3 });
   });
+
+  it.each([0, '', false, null])('keeps the first value %j when override is false', (first) => {
+    const result = merge([{ a: first }, { a: 5 }]);
+    expect(result).toEqual({ a: first });
+  });
 });
 
 describe('modifyKeys', () => {
