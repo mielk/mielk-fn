@@ -1,4 +1,4 @@
-import { describe, expect, it, test } from 'vitest';
+import { describe, expect, expectTypeOf, it, test } from 'vitest';
 import { isArrayOfPrimitives, isObject, isPlainObject, isPrimitive, isStringOrNumber } from './variables.js';
 
 describe('isArrayOfPrimitives', () => {
@@ -248,6 +248,22 @@ describe('isPrimitive', () => {
 
   test('should return false for function', () => {
     expect(isPrimitive(() => {})).toBe(false);
+  });
+});
+
+describe('isPrimitive type guard', () => {
+  it('narrows to a type that includes symbol and bigint', () => {
+    const value: unknown = Symbol('s');
+    if (isPrimitive(value)) {
+      expectTypeOf(value).toEqualTypeOf<string | number | boolean | bigint | symbol | null | undefined>();
+    }
+  });
+
+  it('excludes null and undefined from the narrowed type when includeNullAndUndefined is false', () => {
+    const value: unknown = 1n;
+    if (isPrimitive(value, false)) {
+      expectTypeOf(value).toEqualTypeOf<string | number | boolean | bigint | symbol>();
+    }
   });
 });
 
