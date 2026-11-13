@@ -80,7 +80,7 @@
     "dev": "tsc -p tsconfig.build.json --watch",
     "release": "standard-version"
   },
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mielk/mielk-fn.git"
