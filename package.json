@@ -70,7 +70,7 @@
   "scripts": {
     "test": "vitest run --coverage",
     "test:watch": "vitest",
-    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })\"",
+    "clean": "node -e \"const fs = require('node:fs'); for (const e of fs.existsSync('dist') ? fs.readdirSync('dist') : []) fs.rmSync('dist/' + e, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })\"",
     "build": "npm run clean && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
