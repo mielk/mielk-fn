@@ -3,7 +3,7 @@
   "version": "1.2.6",
   "keywords": [],
   "author": "mielk",
-  "description": "Generic functions used in various projects",
+  "description": "Helper functions for arrays, objects, strings, numbers, dates and Redis shared by mielk applications.",
   "type": "module",
   "engines": {
     "node": ">=24"
@@ -85,7 +85,7 @@
     "type": "git",
     "url": "git+https://github.com/mielk/mielk-fn.git"
   },
-  "homepage": "https://mielk.github.io/mielk-fn/",
+  "homepage": "https://github.com/mielk/mielk-fn#readme",
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@types/node": "24.19.2",
