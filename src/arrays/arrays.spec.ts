@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, expectTypeOf, it } from 'vitest';
 import { toIndexedArray, toMap } from './arrays.js';
 
 describe('toMap', () => {
@@ -37,6 +37,30 @@ describe('toMap', () => {
     expect(map.get(5)).toBe('Czesiek');
   });
 
+  it('infers the key and value types from the callbacks', () => {
+    expectTypeOf(toMap(objects, (obj) => obj.id)).toEqualTypeOf<Map<number, { name: string; id: number }>>();
+    expectTypeOf(
+      toMap(
+        objects,
+        (obj) => obj.id,
+        (obj) => obj.name,
+      ),
+    ).toEqualTypeOf<Map<number, string>>();
+  });
+
+  it('keeps the last item for a repeated key when ignoreDuplicates is false', () => {
+    const map = toMap(
+      [
+        { name: 'Adam', id: 1 },
+        { name: 'Bartek', id: 1 },
+      ],
+      (obj) => obj.id,
+      undefined,
+      false,
+    );
+    expect(map.get(1)).toEqual({ name: 'Bartek', id: 1 });
+  });
+
   it('should ignore duplicate keys by default', () => {
     const objectsWithDuplicate = [
       { name: 'Adam', id: 1 },
@@ -58,8 +82,7 @@ describe('toIndexedArray', () => {
       { name: 'Czesiek', id: 5 },
     ];
 
-    const callback = (item: any) => item.id;
-    const result = toIndexedArray(items, callback);
+    const result = toIndexedArray(items, (item) => item.id);
 
     expect(result[1]).toEqual({ name: 'Adam', id: 1 });
     expect(result[4]).toEqual({ name: 'Bartek', id: 4 });
@@ -99,14 +122,14 @@ describe('toIndexedArray', () => {
       { name: 'Czesiek', id: '5' },
     ];
 
-    const callback = (item: any) => item.id;
+    // The id is a string; the cast simulates a caller without type checking, which the runtime check covers.
+    const callback = (item: { id: string }) => item.id as unknown as number;
     expect(() => toIndexedArray(items, callback)).toThrow(new TypeError('Callback should return a number.'));
   });
 
   it('should handle an empty array', () => {
-    const items: any[] = [];
-    const callback = (item: any) => item.id;
-    const result = toIndexedArray(items, callback);
+    const items: { id: number }[] = [];
+    const result = toIndexedArray(items, (item) => item.id);
     expect(result).toEqual([]);
   });
 });
