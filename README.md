@@ -77,6 +77,7 @@ The first call creates the single client of the process; later calls may omit th
 | `modifyKeys`                                      | `TypeError`                 | the input is not a plain object                                                                                               |
 | `getRedisClient`                                  | `Error`                     | a later call passes a configuration different from the existing client                                                        |
 | `getRedisClient`, `addRedisKey`, `removeRedisKey` | error of the `redis` client | the connection cannot be opened or a command fails                                                                            |
+| `addRedisKey`                                     | `TypeError`                 | `content` cannot be serialised by `JSON.stringify` (circular reference, `bigint`); nothing is sent to Redis                   |
 
 Other functions do not throw for documented inputs; type checks return `false` for unexpected values.
 
