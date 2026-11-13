@@ -49,14 +49,15 @@ const connect = async (client: RedisClientType): Promise<RedisClientType> => {
   return client;
 };
 
-// Starts a connection attempt shared by parallel callers. The attempt is cleared when it settles, but only
-// if it is still the current one; clearing it inside connect() would run too early when connect() throws
-// synchronously and would leave a settled attempt in place.
+// Starts a connection attempt shared by parallel callers and clears it once it settles. The callbacks of
+// then() always run after the assignment below; clearing it in a finally block inside connect() would run
+// before it when client.connect() throws synchronously, and the failed attempt would stay in place.
+// No second attempt can start while this one is pending, so the attempt being cleared is always this one.
 const startConnecting = (client: RedisClientType): Promise<RedisClientType> => {
   const attempt = connect(client);
   connecting = attempt;
   const clear = (): void => {
-    if (connecting === attempt) connecting = null;
+    connecting = null;
   };
   attempt.then(clear, clear);
   return attempt;
