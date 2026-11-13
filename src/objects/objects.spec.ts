@@ -143,7 +143,7 @@ describe('merge', () => {
   });
 
   it('Array with non-objects', () => {
-    const input = ['string1', 42, true] as unknown as Array<object>;
+    const input = ['string1', 42, true, null, [1]];
     const result = merge(input);
     expect(result).toEqual({});
   });
@@ -174,6 +174,14 @@ describe('merge', () => {
   test('Array with objects with duplicated properties and override=true', () => {
     const result = merge([{ a: 1 }, { a: 2 }, { a: 3 }], true);
     expect(result).toEqual({ a: 3 });
+  });
+
+  it('writes __proto__ as an own key without changing the prototype', () => {
+    const input = JSON.parse('{"__proto__": {"polluted": true}}') as unknown;
+    const result = merge([input]);
+    expect(Object.getPrototypeOf(result)).toBe(Object.prototype);
+    expect(Object.hasOwn(result, '__proto__')).toBe(true);
+    expect(result).not.toHaveProperty('polluted');
   });
 
   it.each([0, '', false, null])('keeps the first value %j when override is false', (first) => {

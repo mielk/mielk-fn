@@ -5,18 +5,28 @@ type NumberStringFunction = (key: string, item: any) => number | string;
 
 type InvertAllowedTypes = string | number;
 
-const merge = (objects: ObjectAny[], override: boolean = false): ObjectAny => {
-  const merged: ObjectAny = {};
-  objects.forEach((obj) => {
-    if (isObject(obj)) {
-      const entries = Object.entries(obj);
-      entries.forEach(([key, value]) => {
-        if (!merged[key] || override) merged[key] = value;
-      });
+/**
+ * Merges the own enumerable properties of several objects into a new object.
+ *
+ * Items that are not objects (primitives, arrays, `null`) are skipped. A key present in several objects is
+ * resolved by `override`. Keys are written as own properties, so a key such as `__proto__` does not change
+ * the prototype of the result.
+ *
+ * @param objects Objects to merge, in order.
+ * @param override `false` (default): the first value of a key wins, also when it is `0`, `''`, `false` or
+ *   `null`; `true`: the last value wins.
+ * @returns New object with the merged properties.
+ */
+function merge(objects: readonly unknown[], override = false): Record<string, unknown> {
+  const merged = new Map<string, unknown>();
+  for (const obj of objects) {
+    if (!isObject(obj)) continue;
+    for (const [key, value] of Object.entries(obj)) {
+      if (override || !merged.has(key)) merged.set(key, value);
     }
-  });
-  return merged;
-};
+  }
+  return Object.fromEntries(merged);
+}
 
 /**
  * Swaps keys and values of an object.
