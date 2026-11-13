@@ -1,10 +1,9 @@
-const defaultTimeZone = 'Europe/Warsaw';
+const DEFAULT_TIME_ZONE = 'Europe/Warsaw';
 const formatterCache = new Map<string, Intl.DateTimeFormat>();
 
-function getFormatter(timeZone: string) {
-  if (formatterCache.has(timeZone)) {
-    return formatterCache.get(timeZone)!;
-  }
+function getFormatter(timeZone: string): Intl.DateTimeFormat {
+  const cached = formatterCache.get(timeZone);
+  if (cached) return cached;
 
   const formatter = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
@@ -21,7 +20,15 @@ function getFormatter(timeZone: string) {
   return formatter;
 }
 
-export function formatDateDefault(date: Date | undefined, timeZone = defaultTimeZone): string {
+/**
+ * Formats a date as `YYYY-MM-DD HH:mm:ss` (24-hour clock) in a time zone.
+ *
+ * @param date Date to format; `undefined` gives an empty string.
+ * @param timeZone IANA time zone name (default `Europe/Warsaw`).
+ * @returns The formatted date, or `''` when `date` is `undefined`.
+ * @throws {RangeError} When `timeZone` is not a valid time zone.
+ */
+export function formatDateDefault(date: Date | undefined, timeZone = DEFAULT_TIME_ZONE): string {
   if (!date) return '';
 
   const formatter = getFormatter(timeZone);
@@ -29,5 +36,3 @@ export function formatDateDefault(date: Date | undefined, timeZone = defaultTime
   const map = Object.fromEntries(parts.map((p) => [p.type, p.value])) as Record<Intl.DateTimeFormatPartTypes, string>;
   return `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second}`;
 }
-
-export default { formatDateToDefault: formatDateDefault };

@@ -8,8 +8,6 @@ export const capitalizeFirst = (str: string): string => {
 };
 
 export const collapseWhitespace = (value: string): string => {
-  const regex = /(^\s+|(?<=\s)\s|\s+$)/gi;
+  const regex = /(^\s+|(?<=\s)\s|\s+$)/g;
   return value.replace(regex, '');
 };
-
-export default { capitalizeFirst, collapseWhitespace };
