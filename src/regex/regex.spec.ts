@@ -19,4 +19,18 @@ describe('getCapturedNumber', () => {
   it('returns undefined when the captured group is not a number', () => {
     expect(getCapturedNumber('Current value: abc;', 'value: ([a-z]+)')).toBeUndefined();
   });
+
+  it('accepts a RegExp pattern', () => {
+    expect(getCapturedNumber('Current value: 42;', /value: ([0-9]+)/)).toBe(42);
+  });
+
+  it('returns the first match for a RegExp with the g flag, also on repeated calls', () => {
+    const pattern = /value: ([0-9]+)/g;
+    expect(getCapturedNumber('value: 1, value: 2', pattern)).toBe(1);
+    expect(getCapturedNumber('value: 1, value: 2', pattern)).toBe(1);
+  });
+
+  it('returns undefined when the group did not participate in the match', () => {
+    expect(getCapturedNumber('value: x', /value: (?:([0-9]+)|x)/)).toBeUndefined();
+  });
 });
