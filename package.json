@@ -70,6 +70,10 @@
 	"scripts": {
 		"test": "jest --detectOpenHandles",
 		"build": "tsc",
+		"typecheck": "tsc --noEmit",
+		"lint": "eslint . --max-warnings 0",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
 		"prepublishOnly": "npm test && npm run build",
 		"dev": "tsc --watch",
 		"release": "standard-version"
@@ -81,12 +85,16 @@
 	},
 	"homepage": "https://mielk.github.io/mielk-fn/",
 	"devDependencies": {
+		"@eslint/js": "10.0.1",
 		"@types/jest": "^30.0.0",
+		"eslint": "10.14.0",
 		"jest": "^30.3.0",
 		"jest-html-reporters": "^3.1.7",
+		"prettier": "3.10.1",
 		"standard-version": "^9.5.0",
 		"ts-jest": "^29.4.6",
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.2",
+		"typescript-eslint": "8.72.2"
 	},
 	"files": [
 		"dist"
