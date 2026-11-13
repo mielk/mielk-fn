@@ -45,20 +45,29 @@ const createRedisClient = (config: ResolvedConfig): RedisClientType => {
 };
 
 const connect = async (client: RedisClientType): Promise<RedisClientType> => {
-  try {
-    await client.connect();
-    return client;
-  } finally {
-    connecting = null;
-  }
+  await client.connect();
+  return client;
+};
+
+// Starts a connection attempt shared by parallel callers. The attempt is cleared when it settles, but only
+// if it is still the current one; clearing it inside connect() would run too early when connect() throws
+// synchronously and would leave a settled attempt in place.
+const startConnecting = (client: RedisClientType): Promise<RedisClientType> => {
+  const attempt = connect(client);
+  connecting = attempt;
+  const clear = (): void => {
+    if (connecting === attempt) connecting = null;
+  };
+  attempt.then(clear, clear);
+  return attempt;
 };
 
 /**
  * Returns the shared Redis client of the process, connecting it when it is not open.
  *
  * The first call creates the client from `config` (defaults: `127.0.0.1:6379`, no password).
- * Later calls may omit `config` or pass the same settings; parallel calls share one connection attempt,
- * and a client closed in the meantime is connected again.
+ * Later calls may omit `config` or pass the same settings; parallel calls share one connection attempt and
+ * all of them resolve or reject with it, and a client closed in the meantime is connected again.
  *
  * @param config Connection settings; used only by the call that creates the client.
  * @returns The connected client.
@@ -76,7 +85,9 @@ export const getRedisClient = async (config?: RedisConfig): Promise<RedisClientT
     );
   }
 
+  // A pending attempt is checked first: redis sets isOpen to true at the start of connect(), before the socket
+  // is ready and before authentication, so isOpen alone does not mean the connection succeeded.
+  if (connecting !== null) return connecting;
   if (redisClient.isOpen) return redisClient;
-  connecting ??= connect(redisClient);
-  return connecting;
+  return startConnecting(redisClient);
 };

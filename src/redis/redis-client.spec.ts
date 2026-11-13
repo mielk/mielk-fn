@@ -97,6 +97,59 @@ describe('getRedisClient', () => {
     expect(fakeClient.connect).toHaveBeenCalledTimes(2);
   });
 
+  // The real redis client sets isOpen to true synchronously at the start of connect(), before it settles.
+  const connectSettledLater = () => {
+    let settle: { resolve: () => void; reject: (error: Error) => void } | undefined;
+    fakeClient.connect.mockImplementationOnce(() => {
+      fakeClient.isOpen = true;
+      return new Promise<FakeClient>((resolve, reject) => {
+        settle = { resolve: () => resolve(fakeClient), reject };
+      });
+    });
+    return {
+      resolve: () => settle?.resolve(),
+      reject: (error: Error) => {
+        fakeClient.isOpen = false;
+        settle?.reject(error);
+      },
+    };
+  };
+
+  it('resolves parallel calls only after the shared connection attempt succeeds', async () => {
+    const { getRedisClient } = await loadModule();
+    const connection = connectSettledLater();
+    const settled: string[] = [];
+    const first = getRedisClient().then(() => settled.push('first'));
+    const second = getRedisClient().then(() => settled.push('second'));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(settled).toEqual([]);
+    connection.resolve();
+    await Promise.all([first, second]);
+    expect(settled).toEqual(['first', 'second']);
+    expect(fakeClient.connect).toHaveBeenCalledTimes(1);
+  });
+
+  it('rejects parallel calls when the shared connection attempt fails', async () => {
+    const { getRedisClient } = await loadModule();
+    const connection = connectSettledLater();
+    const first = getRedisClient();
+    const second = getRedisClient();
+    connection.reject(new Error('AUTH failed'));
+    await expect(first).rejects.toThrow('AUTH failed');
+    await expect(second).rejects.toThrow('AUTH failed');
+    expect(fakeClient.connect).toHaveBeenCalledTimes(1);
+  });
+
+  it('clears the attempt when connect throws synchronously and connects again on the next call', async () => {
+    const { getRedisClient } = await loadModule();
+    fakeClient.connect.mockImplementationOnce(() => {
+      throw new Error('Socket already opened');
+    });
+    await expect(getRedisClient()).rejects.toThrow('Socket already opened');
+    await expect(getRedisClient()).resolves.toBe(fakeClient);
+    expect(fakeClient.connect).toHaveBeenCalledTimes(2);
+  });
+
   it('rejects when the connection fails and connects again on the next call', async () => {
     const { getRedisClient } = await loadModule();
     fakeClient.connect.mockRejectedValueOnce(new Error('ECONNREFUSED'));
