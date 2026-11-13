@@ -122,9 +122,10 @@ describe('toIndexedArray', () => {
       { name: 'Czesiek', id: '5' },
     ];
 
-    // The id is a string; the cast simulates a caller without type checking, which the runtime check covers.
-    const callback = (item: { id: string }) => item.id as unknown as number;
-    expect(() => toIndexedArray(items, callback)).toThrow(new TypeError('Callback should return a number.'));
+    const indexById = () =>
+      // @ts-expect-error The id is a string; simulates a caller without type checking, which the runtime check covers.
+      toIndexedArray(items, (item) => item.id);
+    expect(indexById).toThrow(new TypeError('Callback should return a number.'));
   });
 
   it('handles an empty array', () => {

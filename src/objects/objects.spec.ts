@@ -35,13 +35,13 @@ describe('invert', () => {
   });
 
   it('throws for a non-object input', () => {
-    const input = 'string' as unknown as Record<string | number, string | number>;
-    expect(() => invert(input)).toThrow('Invalid input: the input must be an object.');
+    // @ts-expect-error A string is not an object; simulates a caller without type checking.
+    expect(() => invert('string')).toThrow('Invalid input: the input must be an object.');
   });
 
   it('throws for a value that cannot be a key', () => {
-    const input = { key1: true } as unknown as Record<string | number, string | number>;
-    expect(() => invert(input)).toThrow('Invalid value type: the value must be a string or a number.');
+    // @ts-expect-error A boolean value cannot be a key; simulates a caller without type checking.
+    expect(() => invert({ key1: true })).toThrow('Invalid value type: the value must be a string or a number.');
   });
 
   it('inverts object with string keys and number values', () => {
@@ -165,7 +165,7 @@ describe('merge', () => {
   it('merges the objects and ignores non-object items', () => {
     const obj1 = { key1: 'value1' };
     const obj2 = { key2: 'value2' };
-    const input = [obj1, 'string1', 42, obj2, true] as unknown as Array<object>;
+    const input = [obj1, 'string1', 42, obj2, true];
     const result = merge(input);
     expect(result).toEqual({ key1: 'value1', key2: 'value2' });
   });
@@ -258,8 +258,8 @@ describe('modifyKeys', () => {
 
   it('throws an error if the second argument is not a function', () => {
     const obj = { a: 1, b: 2, c: 3 };
-    const callback = 'not a function';
-    expect(() => modifyKeys(obj, callback as unknown as NumberStringFunction)).toThrow(TypeError);
+    // @ts-expect-error A string is not a callback; simulates a caller without type checking.
+    expect(() => modifyKeys(obj, 'not a function')).toThrow(TypeError);
   });
 
   it('handles an object with duplicate modified keys', () => {
@@ -301,7 +301,8 @@ describe('modifyKeys', () => {
     expect(result).not.toHaveProperty('polluted');
   });
   it('names null in the error message', () => {
-    expect(() => modifyKeys(null as unknown as Record<string, unknown>, (key) => key)).toThrow(
+    // @ts-expect-error null is not an object; simulates a caller without type checking.
+    expect(() => modifyKeys(null, (key) => key)).toThrow(
       new TypeError('Invalid type of null. Expected JavaScript object'),
     );
   });

@@ -65,7 +65,8 @@ describe('collapseWhitespace', () => {
 
   it('throws an error if input is not a string', () => {
     expect(() => {
-      collapseWhitespace(123 as unknown as string);
+      // @ts-expect-error A number is not a string; simulates a caller without type checking.
+      collapseWhitespace(123);
     }).toThrow();
   });
 
