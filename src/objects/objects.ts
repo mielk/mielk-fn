@@ -15,14 +15,14 @@ type InvertAllowedTypes = string | number;
  * @returns New object with the merged properties.
  */
 function merge(objects: readonly unknown[], override = false): Record<string, unknown> {
-  const merged = new Map<string, unknown>();
-  for (const obj of objects) {
-    if (!isObject(obj)) continue;
-    for (const [key, value] of Object.entries(obj)) {
-      if (override || !merged.has(key)) merged.set(key, value);
+    const merged = new Map<string, unknown>();
+    for (const obj of objects) {
+        if (!isObject(obj)) continue;
+        for (const [key, value] of Object.entries(obj)) {
+            if (override || !merged.has(key)) merged.set(key, value);
+        }
     }
-  }
-  return Object.fromEntries(merged);
+    return Object.fromEntries(merged);
 }
 
 /**
@@ -40,31 +40,31 @@ function merge(objects: readonly unknown[], override = false): Record<string, un
  *   and `ignoreDuplicatedKey` is `false`.
  */
 function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
-  obj: Record<T, U>,
-  ignoreDuplicatedKey = false,
+    obj: Record<T, U>,
+    ignoreDuplicatedKey = false,
 ): Record<U, `${T}`> {
-  if (!isObject(obj)) {
-    throw new Error('Invalid input: the input must be an object.');
-  }
-
-  // Keyed by the string form of the value, as object keys are: 1 and '1' are the same key.
-  const inverted = new Map<string, string>();
-  for (const key in obj) {
-    const value = obj[key];
-    if (typeof value !== 'string' && typeof value !== 'number') {
-      throw new Error('Invalid value type: the value must be a string or a number.');
+    if (!isObject(obj)) {
+        throw new Error('Invalid input: the input must be an object.');
     }
-    if (inverted.has(String(value))) {
-      if (ignoreDuplicatedKey) continue;
-      throw new Error(`Duplicated key in the result: the value '${value}' occurs more than once.`);
-    }
-    inverted.set(String(value), key);
-  }
 
-  // Built from entries, so a value such as '__proto__' becomes an own key and does not set the prototype.
-  // The cast restores the key types that Object.fromEntries widens to string: every value was checked above
-  // to be the string or number of type U, and every key comes from for...in over obj, i.e. the string form of T.
-  return Object.fromEntries(inverted) as Record<U, `${T}`>;
+    // Keyed by the string form of the value, as object keys are: 1 and '1' are the same key.
+    const inverted = new Map<string, string>();
+    for (const key in obj) {
+        const value = obj[key];
+        if (typeof value !== 'string' && typeof value !== 'number') {
+            throw new Error('Invalid value type: the value must be a string or a number.');
+        }
+        if (inverted.has(String(value))) {
+            if (ignoreDuplicatedKey) continue;
+            throw new Error(`Duplicated key in the result: the value '${value}' occurs more than once.`);
+        }
+        inverted.set(String(value), key);
+    }
+
+    // Built from entries, so a value such as '__proto__' becomes an own key and does not set the prototype.
+    // The cast restores the key types that Object.fromEntries widens to string: every value was checked above
+    // to be the string or number of type U, and every key comes from for...in over obj, i.e. the string form of T.
+    return Object.fromEntries(inverted) as Record<U, `${T}`>;
 }
 
 /**
@@ -78,19 +78,19 @@ function invert<T extends InvertAllowedTypes, U extends InvertAllowedTypes>(
  * @throws {TypeError} When `obj` is not a plain object.
  */
 const modifyKeys = <V>(
-  obj: Readonly<Record<string, V>>,
-  callback: (key: string, value: V) => string | number,
-  ignoreDuplicates = true,
+    obj: Readonly<Record<string, V>>,
+    callback: (key: string, value: V) => string | number,
+    ignoreDuplicates = true,
 ): Record<string, V> => {
-  if (!isPlainObject(obj)) throw new TypeError(`Invalid type of ${typeName(obj)}. Expected JavaScript object`);
-  const result = new Map<string, V>();
-  for (const [key, value] of Object.entries(obj)) {
-    const newKey = String(callback(key, value));
-    if (!result.has(newKey) || !ignoreDuplicates) {
-      result.set(newKey, value);
+    if (!isPlainObject(obj)) throw new TypeError(`Invalid type of ${typeName(obj)}. Expected JavaScript object`);
+    const result = new Map<string, V>();
+    for (const [key, value] of Object.entries(obj)) {
+        const newKey = String(callback(key, value));
+        if (!result.has(newKey) || !ignoreDuplicates) {
+            result.set(newKey, value);
+        }
     }
-  }
-  return Object.fromEntries(result);
+    return Object.fromEntries(result);
 };
 
 /**
@@ -100,15 +100,15 @@ const modifyKeys = <V>(
  * @returns `true` for a non-empty object.
  */
 const isNonEmptyObject = (value: unknown): value is object => {
-  if (!isObject(value)) return false;
-  return Object.keys(value).length > 0;
+    if (!isObject(value)) return false;
+    return Object.keys(value).length > 0;
 };
 
 /** Name of the value's type for error messages: the constructor name, or `null` / `undefined`. */
 const typeName = (value: unknown): string => {
-  if (value === null || value === undefined) return String(value);
-  const boxed = Object(value) as object;
-  return boxed.constructor.name;
+    if (value === null || value === undefined) return String(value);
+    const boxed = Object(value) as object;
+    return boxed.constructor.name;
 };
 
 export { invert, isNonEmptyObject, merge, modifyKeys };

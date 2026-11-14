@@ -4,36 +4,40 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist/', 'coverage/', 'reports/'] },
-  js.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: { allowDefaultProject: ['*.js'] },
-        tsconfigRootDir: import.meta.dirname,
-      },
+    { ignores: ['dist/', 'coverage/', 'reports/'] },
+    js.configs.recommended,
+    tseslint.configs.recommendedTypeChecked,
+    {
+        languageOptions: {
+            parserOptions: {
+                projectService: { allowDefaultProject: ['*.js'] },
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'error',
+            '@typescript-eslint/no-non-null-assertion': 'error',
+            '@typescript-eslint/only-throw-error': 'error',
+            '@typescript-eslint/no-floating-promises': 'error',
+            '@typescript-eslint/no-misused-promises': 'error',
+            // The library takes configuration as parameters and never reads the environment (ts:BIB-6, ts:ENV-1).
+            'no-restricted-properties': [
+                'error',
+                {
+                    object: 'process',
+                    property: 'env',
+                    message: 'Take configuration as a parameter instead (ts:BIB-6).',
+                },
+            ],
+        },
     },
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/no-non-null-assertion': 'error',
-      '@typescript-eslint/only-throw-error': 'error',
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/no-misused-promises': 'error',
-      // The library takes configuration as parameters and never reads the environment (ts:BIB-6, ts:ENV-1).
-      'no-restricted-properties': [
-        'error',
-        { object: 'process', property: 'env', message: 'Take configuration as a parameter instead (ts:BIB-6).' },
-      ],
+    {
+        files: ['**/*.js'],
+        extends: [tseslint.configs.disableTypeChecked],
     },
-  },
-  {
-    files: ['**/*.js'],
-    extends: [tseslint.configs.disableTypeChecked],
-  },
-  {
-    // Repository scripts run by npm in Node.js; they are not part of the library and read npm_package_* variables.
-    files: ['scripts/**/*.ts'],
-    rules: { 'no-restricted-properties': 'off' },
-  },
+    {
+        // Repository scripts run by npm in Node.js; they are not part of the library and read npm_package_* variables.
+        files: ['scripts/**/*.ts'],
+        rules: { 'no-restricted-properties': 'off' },
+    },
 );

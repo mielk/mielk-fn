@@ -2,19 +2,19 @@ import { createClient, type RedisClientType } from 'redis';
 
 /** Connection settings of the shared Redis client. */
 export type RedisConfig = {
-  /** Server host; default `127.0.0.1`. */
-  host?: string;
-  /** Server port; default `6379`. */
-  port?: number;
-  /** Password (AUTH); omitted when the server does not require one. */
-  password?: string;
-  /**
-   * Receives errors emitted by the client (e.g. a lost connection while it reconnects).
-   * Without it these events are not reported; failed commands still reject their promises.
-   *
-   * @since 2.0.0
-   */
-  onError?: (error: Error) => void;
+    /** Server host; default `127.0.0.1`. */
+    host?: string;
+    /** Server port; default `6379`. */
+    port?: number;
+    /** Password (AUTH); omitted when the server does not require one. */
+    password?: string;
+    /**
+     * Receives errors emitted by the client (e.g. a lost connection while it reconnects).
+     * Without it these events are not reported; failed commands still reject their promises.
+     *
+     * @since 2.0.0
+     */
+    onError?: (error: Error) => void;
 };
 
 const DEFAULT_HOST = '127.0.0.1';
@@ -27,26 +27,26 @@ let redisClient: RedisClientType | null = null;
 let connecting: Promise<RedisClientType> | null = null;
 
 const resolveConfig = (config: RedisConfig = {}): ResolvedConfig => ({
-  host: config.host ?? DEFAULT_HOST,
-  port: config.port ?? DEFAULT_PORT,
-  password: config.password,
-  onError: config.onError,
+    host: config.host ?? DEFAULT_HOST,
+    port: config.port ?? DEFAULT_PORT,
+    password: config.password,
+    onError: config.onError,
 });
 
 const isSameConfig = (a: ResolvedConfig, b: ResolvedConfig): boolean =>
-  a.host === b.host && a.port === b.port && a.password === b.password && a.onError === b.onError;
+    a.host === b.host && a.port === b.port && a.password === b.password && a.onError === b.onError;
 
 const createRedisClient = (config: ResolvedConfig): RedisClientType => {
-  const { host, port, password, onError } = config;
-  const client: RedisClientType = createClient({ socket: { host, port }, password });
-  // An 'error' event without a listener would crash the process, so the listener is always registered.
-  client.on('error', (error: Error) => onError?.(error));
-  return client;
+    const { host, port, password, onError } = config;
+    const client: RedisClientType = createClient({ socket: { host, port }, password });
+    // An 'error' event without a listener would crash the process, so the listener is always registered.
+    client.on('error', (error: Error) => onError?.(error));
+    return client;
 };
 
 const connect = async (client: RedisClientType): Promise<RedisClientType> => {
-  await client.connect();
-  return client;
+    await client.connect();
+    return client;
 };
 
 // Starts a connection attempt shared by parallel callers and clears it once it settles. The callbacks of
@@ -54,13 +54,13 @@ const connect = async (client: RedisClientType): Promise<RedisClientType> => {
 // before it when client.connect() throws synchronously, and the failed attempt would stay in place.
 // No second attempt can start while this one is pending, so the attempt being cleared is always this one.
 const startConnecting = (client: RedisClientType): Promise<RedisClientType> => {
-  const attempt = connect(client);
-  connecting = attempt;
-  const clear = (): void => {
-    connecting = null;
-  };
-  attempt.then(clear, clear);
-  return attempt;
+    const attempt = connect(client);
+    connecting = attempt;
+    const clear = (): void => {
+        connecting = null;
+    };
+    attempt.then(clear, clear);
+    return attempt;
 };
 
 /**
@@ -76,19 +76,19 @@ const startConnecting = (client: RedisClientType): Promise<RedisClientType> => {
  * @throws The error of `connect()` when the connection cannot be opened.
  */
 export const getRedisClient = async (config?: RedisConfig): Promise<RedisClientType> => {
-  const requested = resolveConfig(config);
-  if (redisClient === null || activeConfig === null) {
-    activeConfig = requested;
-    redisClient = createRedisClient(requested);
-  } else if (config !== undefined && !isSameConfig(activeConfig, requested)) {
-    throw new Error(
-      `The Redis client already exists with a different configuration (${activeConfig.host}:${String(activeConfig.port)}).`,
-    );
-  }
+    const requested = resolveConfig(config);
+    if (redisClient === null || activeConfig === null) {
+        activeConfig = requested;
+        redisClient = createRedisClient(requested);
+    } else if (config !== undefined && !isSameConfig(activeConfig, requested)) {
+        throw new Error(
+            `The Redis client already exists with a different configuration (${activeConfig.host}:${String(activeConfig.port)}).`,
+        );
+    }
 
-  // A pending attempt is checked first: redis sets isOpen to true at the start of connect(), before the socket
-  // is ready and before authentication, so isOpen alone does not mean the connection succeeded.
-  if (connecting !== null) return connecting;
-  if (redisClient.isOpen) return redisClient;
-  return startConnecting(redisClient);
+    // A pending attempt is checked first: redis sets isOpen to true at the start of connect(), before the socket
+    // is ready and before authentication, so isOpen alone does not mean the connection succeeded.
+    if (connecting !== null) return connecting;
+    if (redisClient.isOpen) return redisClient;
+    return startConnecting(redisClient);
 };

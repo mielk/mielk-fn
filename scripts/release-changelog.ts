@@ -18,23 +18,24 @@ const UNRELEASED = '## [Unreleased]';
  * @throws {Error} When there is no Unreleased section, it has no entry, or the version is already listed.
  */
 export const releaseChangelog = (changelog: string, version: string, date: string): string => {
-  const start = changelog.indexOf(UNRELEASED);
-  if (start === -1) throw new Error(`CHANGELOG.md has no "${UNRELEASED}" section.`);
-  if (changelog.includes(`## [${version}]`)) throw new Error(`CHANGELOG.md already has a section for ${version}.`);
-  const bodyStart = start + UNRELEASED.length;
-  // A version heading ends the section; versions released with standard-version use '### [x.y.z]'.
-  const next = changelog.slice(bodyStart).search(/\n#{2,3} \[/);
-  const bodyEnd = next === -1 ? changelog.length : bodyStart + next + 1;
-  const body = changelog.slice(bodyStart, bodyEnd);
-  if (!/^- /m.test(body)) throw new Error(`"${UNRELEASED}" has no entries; a version without changes is not released.`);
-  const entries = body.trim();
-  return `${changelog.slice(0, bodyStart)}\n\n## [${version}] - ${date}\n\n${entries}\n\n${changelog.slice(bodyEnd)}`;
+    const start = changelog.indexOf(UNRELEASED);
+    if (start === -1) throw new Error(`CHANGELOG.md has no "${UNRELEASED}" section.`);
+    if (changelog.includes(`## [${version}]`)) throw new Error(`CHANGELOG.md already has a section for ${version}.`);
+    const bodyStart = start + UNRELEASED.length;
+    // A version heading ends the section; versions released with standard-version use '### [x.y.z]'.
+    const next = changelog.slice(bodyStart).search(/\n#{2,3} \[/);
+    const bodyEnd = next === -1 ? changelog.length : bodyStart + next + 1;
+    const body = changelog.slice(bodyStart, bodyEnd);
+    if (!/^- /m.test(body))
+        throw new Error(`"${UNRELEASED}" has no entries; a version without changes is not released.`);
+    const entries = body.trim();
+    return `${changelog.slice(0, bodyStart)}\n\n## [${version}] - ${date}\n\n${entries}\n\n${changelog.slice(bodyEnd)}`;
 };
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const version = process.env.npm_package_version;
-  if (!version) throw new Error('npm_package_version is not set; run this script through npm version.');
-  const date = new Date().toISOString().slice(0, 10);
-  const changelog = readFileSync('CHANGELOG.md', 'utf8');
-  writeFileSync('CHANGELOG.md', releaseChangelog(changelog, version, date));
+    const version = process.env.npm_package_version;
+    if (!version) throw new Error('npm_package_version is not set; run this script through npm version.');
+    const date = new Date().toISOString().slice(0, 10);
+    const changelog = readFileSync('CHANGELOG.md', 'utf8');
+    writeFileSync('CHANGELOG.md', releaseChangelog(changelog, version, date));
 }

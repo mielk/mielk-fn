@@ -11,13 +11,13 @@
  * @throws {SyntaxError} When `pattern` is a string that is not a valid regular expression (e.g. `'('`).
  */
 export const getCapturedNumber = (input: string, pattern: string | RegExp): number | undefined => {
-  const regex = typeof pattern === 'string' ? new RegExp(pattern) : withoutStatefulFlags(pattern);
-  const group = regex.exec(input)?.[1];
-  if (!group) return undefined;
-  const num = parseInt(group, 10);
-  return Number.isNaN(num) ? undefined : num;
+    const regex = typeof pattern === 'string' ? new RegExp(pattern) : withoutStatefulFlags(pattern);
+    const group = regex.exec(input)?.[1];
+    if (!group) return undefined;
+    const num = parseInt(group, 10);
+    return Number.isNaN(num) ? undefined : num;
 };
 
 /** Returns the expression without the `g` and `y` flags, which make `exec` depend on `lastIndex`. */
 const withoutStatefulFlags = (regex: RegExp): RegExp =>
-  regex.global || regex.sticky ? new RegExp(regex.source, regex.flags.replace(/[gy]/g, '')) : regex;
+    regex.global || regex.sticky ? new RegExp(regex.source, regex.flags.replace(/[gy]/g, '')) : regex;

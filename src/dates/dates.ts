@@ -2,22 +2,22 @@ const DEFAULT_TIME_ZONE = 'Europe/Warsaw';
 const formatterCache = new Map<string, Intl.DateTimeFormat>();
 
 function getFormatter(timeZone: string): Intl.DateTimeFormat {
-  const cached = formatterCache.get(timeZone);
-  if (cached) return cached;
+    const cached = formatterCache.get(timeZone);
+    if (cached) return cached;
 
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-    timeZone,
-  });
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone,
+    });
 
-  formatterCache.set(timeZone, formatter);
-  return formatter;
+    formatterCache.set(timeZone, formatter);
+    return formatter;
 }
 
 /**
@@ -30,10 +30,10 @@ function getFormatter(timeZone: string): Intl.DateTimeFormat {
  *   (e.g. `new Date('invalid')`).
  */
 export function formatDateDefault(date: Date | undefined, timeZone = DEFAULT_TIME_ZONE): string {
-  if (!date) return '';
+    if (!date) return '';
 
-  const formatter = getFormatter(timeZone);
-  const parts = formatter.formatToParts(date);
-  const map = Object.fromEntries(parts.map((p) => [p.type, p.value])) as Record<Intl.DateTimeFormatPartTypes, string>;
-  return `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second}`;
+    const formatter = getFormatter(timeZone);
+    const parts = formatter.formatToParts(date);
+    const map = Object.fromEntries(parts.map((p) => [p.type, p.value])) as Record<Intl.DateTimeFormatPartTypes, string>;
+    return `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second}`;
 }

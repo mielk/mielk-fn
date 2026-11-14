@@ -1,116 +1,116 @@
 {
-  "name": "mielk-fn",
-  "version": "1.2.6",
-  "keywords": [],
-  "author": "mielk",
-  "description": "Helper functions for arrays, objects, strings, numbers, dates and Redis shared by mielk applications.",
-  "type": "module",
-  "engines": {
-    "node": ">=24"
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+    "name": "mielk-fn",
+    "version": "1.2.6",
+    "keywords": [],
+    "author": "mielk",
+    "description": "Helper functions for arrays, objects, strings, numbers, dates and Redis shared by mielk applications.",
+    "type": "module",
+    "engines": {
+        "node": ">=24"
     },
-    "./arrays": {
-      "types": "./dist/arrays/index.d.ts",
-      "import": "./dist/arrays/index.js",
-      "default": "./dist/arrays/index.js"
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./arrays": {
+            "types": "./dist/arrays/index.d.ts",
+            "import": "./dist/arrays/index.js",
+            "default": "./dist/arrays/index.js"
+        },
+        "./dates": {
+            "types": "./dist/dates/index.d.ts",
+            "import": "./dist/dates/index.js",
+            "default": "./dist/dates/index.js"
+        },
+        "./io": {
+            "types": "./dist/io/index.d.ts",
+            "import": "./dist/io/index.js",
+            "default": "./dist/io/index.js"
+        },
+        "./math": {
+            "types": "./dist/math/index.d.ts",
+            "import": "./dist/math/index.js",
+            "default": "./dist/math/index.js"
+        },
+        "./objects": {
+            "types": "./dist/objects/index.d.ts",
+            "import": "./dist/objects/index.js",
+            "default": "./dist/objects/index.js"
+        },
+        "./redis": {
+            "types": "./dist/redis/index.d.ts",
+            "import": "./dist/redis/index.js",
+            "default": "./dist/redis/index.js"
+        },
+        "./regex": {
+            "types": "./dist/regex/index.d.ts",
+            "import": "./dist/regex/index.js",
+            "default": "./dist/regex/index.js"
+        },
+        "./strings": {
+            "types": "./dist/strings/index.d.ts",
+            "import": "./dist/strings/index.js",
+            "default": "./dist/strings/index.js"
+        },
+        "./types": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/types/index.js",
+            "default": "./dist/types/index.js"
+        },
+        "./variables": {
+            "types": "./dist/variables/index.d.ts",
+            "import": "./dist/variables/index.js",
+            "default": "./dist/variables/index.js"
+        }
     },
-    "./dates": {
-      "types": "./dist/dates/index.d.ts",
-      "import": "./dist/dates/index.js",
-      "default": "./dist/dates/index.js"
+    "scripts": {
+        "test": "vitest run --coverage",
+        "test:watch": "vitest",
+        "clean": "node -e \"const fs = require('node:fs'); for (const e of fs.existsSync('dist') ? fs.readdirSync('dist') : []) fs.rmSync('dist/' + e, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })\"",
+        "build": "npm run clean && tsc -p tsconfig.build.json",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint . --max-warnings 0",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:package",
+        "dev": "tsc -p tsconfig.build.json --watch",
+        "check:package": "publint --strict && attw --pack . --profile esm-only",
+        "version": "node scripts/release-changelog.ts && git add CHANGELOG.md"
     },
-    "./io": {
-      "types": "./dist/io/index.d.ts",
-      "import": "./dist/io/index.js",
-      "default": "./dist/io/index.js"
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mielk/mielk-fn.git"
     },
-    "./math": {
-      "types": "./dist/math/index.d.ts",
-      "import": "./dist/math/index.js",
-      "default": "./dist/math/index.js"
+    "homepage": "https://github.com/mielk/mielk-fn#readme",
+    "devDependencies": {
+        "@arethetypeswrong/cli": "0.18.5",
+        "@eslint/js": "10.0.1",
+        "@types/node": "24.19.2",
+        "@vitest/coverage-v8": "5.1.0",
+        "eslint": "10.14.0",
+        "prettier": "3.10.1",
+        "publint": "0.3.25",
+        "redis": "5.11.0",
+        "typescript": "5.9.2",
+        "typescript-eslint": "8.72.2",
+        "vitest": "5.1.0"
     },
-    "./objects": {
-      "types": "./dist/objects/index.d.ts",
-      "import": "./dist/objects/index.js",
-      "default": "./dist/objects/index.js"
+    "files": [
+        "dist",
+        "CHANGELOG.md"
+    ],
+    "peerDependencies": {
+        "redis": "^5"
     },
-    "./redis": {
-      "types": "./dist/redis/index.d.ts",
-      "import": "./dist/redis/index.js",
-      "default": "./dist/redis/index.js"
+    "peerDependenciesMeta": {
+        "redis": {
+            "optional": true
+        }
     },
-    "./regex": {
-      "types": "./dist/regex/index.d.ts",
-      "import": "./dist/regex/index.js",
-      "default": "./dist/regex/index.js"
-    },
-    "./strings": {
-      "types": "./dist/strings/index.d.ts",
-      "import": "./dist/strings/index.js",
-      "default": "./dist/strings/index.js"
-    },
-    "./types": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/types/index.js",
-      "default": "./dist/types/index.js"
-    },
-    "./variables": {
-      "types": "./dist/variables/index.d.ts",
-      "import": "./dist/variables/index.js",
-      "default": "./dist/variables/index.js"
-    }
-  },
-  "scripts": {
-    "test": "vitest run --coverage",
-    "test:watch": "vitest",
-    "clean": "node -e \"const fs = require('node:fs'); for (const e of fs.existsSync('dist') ? fs.readdirSync('dist') : []) fs.rmSync('dist/' + e, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })\"",
-    "build": "npm run clean && tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings 0",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:package",
-    "dev": "tsc -p tsconfig.build.json --watch",
-    "check:package": "publint --strict && attw --pack . --profile esm-only",
-    "version": "node scripts/release-changelog.ts && git add CHANGELOG.md"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mielk/mielk-fn.git"
-  },
-  "homepage": "https://github.com/mielk/mielk-fn#readme",
-  "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.5",
-    "@eslint/js": "10.0.1",
-    "@types/node": "24.19.2",
-    "@vitest/coverage-v8": "5.1.0",
-    "eslint": "10.14.0",
-    "prettier": "3.10.1",
-    "publint": "0.3.25",
-    "redis": "5.11.0",
-    "typescript": "5.9.2",
-    "typescript-eslint": "8.72.2",
-    "vitest": "5.1.0"
-  },
-  "files": [
-    "dist",
-    "CHANGELOG.md"
-  ],
-  "peerDependencies": {
-    "redis": "^5"
-  },
-  "peerDependenciesMeta": {
-    "redis": {
-      "optional": true
-    }
-  },
-  "sideEffects": false
+    "sideEffects": false
 }

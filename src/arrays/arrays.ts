@@ -8,31 +8,31 @@
  * @returns Map from keys to values, in the order in which the keys first appear.
  */
 export function toMap<T, K>(
-  items: readonly T[],
-  keyCallback: (item: T) => K,
-  valueCallback?: undefined,
-  ignoreDuplicates?: boolean,
+    items: readonly T[],
+    keyCallback: (item: T) => K,
+    valueCallback?: undefined,
+    ignoreDuplicates?: boolean,
 ): Map<K, T>;
 export function toMap<T, K, V>(
-  items: readonly T[],
-  keyCallback: (item: T) => K,
-  valueCallback: (item: T) => V,
-  ignoreDuplicates?: boolean,
+    items: readonly T[],
+    keyCallback: (item: T) => K,
+    valueCallback: (item: T) => V,
+    ignoreDuplicates?: boolean,
 ): Map<K, V>;
 export function toMap<T, K, V>(
-  items: readonly T[],
-  keyCallback: (item: T) => K,
-  valueCallback?: (item: T) => V,
-  ignoreDuplicates = true,
+    items: readonly T[],
+    keyCallback: (item: T) => K,
+    valueCallback?: (item: T) => V,
+    ignoreDuplicates = true,
 ): Map<K, T | V> {
-  const map = new Map<K, T | V>();
-  for (const item of items) {
-    const key = keyCallback(item);
-    if (!map.has(key) || !ignoreDuplicates) {
-      map.set(key, valueCallback ? valueCallback(item) : item);
+    const map = new Map<K, T | V>();
+    for (const item of items) {
+        const key = keyCallback(item);
+        if (!map.has(key) || !ignoreDuplicates) {
+            map.set(key, valueCallback ? valueCallback(item) : item);
+        }
     }
-  }
-  return map;
+    return map;
 }
 
 /**
@@ -44,13 +44,13 @@ export function toMap<T, K, V>(
  * @throws {TypeError} When the callback returns a value that is not a number.
  */
 export const toIndexedArray = <T>(items: readonly T[], callback: (item: T) => number): T[] => {
-  const arr: T[] = [];
-  for (const item of items) {
-    const index: unknown = callback(item);
-    if (typeof index !== 'number') {
-      throw new TypeError('Callback should return a number.');
+    const arr: T[] = [];
+    for (const item of items) {
+        const index: unknown = callback(item);
+        if (typeof index !== 'number') {
+            throw new TypeError('Callback should return a number.');
+        }
+        arr[index] = item;
     }
-    arr[index] = item;
-  }
-  return arr;
+    return arr;
 };

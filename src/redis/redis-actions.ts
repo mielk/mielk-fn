@@ -10,8 +10,8 @@ import { getRedisClient } from './redis-client.js';
  *   error of the `redis` client when the command fails.
  */
 export const removeRedisKey = async (key: string): Promise<void> => {
-  const redisClient = await getRedisClient();
-  await redisClient.del(key);
+    const redisClient = await getRedisClient();
+    await redisClient.del(key);
 };
 
 /**
@@ -28,20 +28,20 @@ export const removeRedisKey = async (key: string): Promise<void> => {
  *   error of the `redis` client when the command fails.
  */
 export const addRedisKey = async (
-  key: string,
-  content: Record<string, unknown>,
-  ttlSeconds?: number,
+    key: string,
+    content: Record<string, unknown>,
+    ttlSeconds?: number,
 ): Promise<void> => {
-  // Serialised before connecting, so content that cannot be stored fails without touching the network.
-  const value = JSON.stringify(content);
-  const redisClient = await getRedisClient();
-  const options: SetOptions = ttlSeconds ? createExpirationOptions(ttlSeconds) : {};
-  await redisClient.set(key, value, options);
+    // Serialised before connecting, so content that cannot be stored fails without touching the network.
+    const value = JSON.stringify(content);
+    const redisClient = await getRedisClient();
+    const options: SetOptions = ttlSeconds ? createExpirationOptions(ttlSeconds) : {};
+    await redisClient.set(key, value, options);
 };
 
 const createExpirationOptions = (ttlSeconds: number): SetOptions => ({
-  expiration: {
-    type: 'EX',
-    value: ttlSeconds,
-  },
+    expiration: {
+        type: 'EX',
+        value: ttlSeconds,
+    },
 });

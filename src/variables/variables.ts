@@ -16,8 +16,8 @@ export function isPrimitive(value: unknown, includeNullAndUndefined?: true): val
 export function isPrimitive(value: unknown, includeNullAndUndefined: false): value is NonNullable<Primitive>;
 export function isPrimitive(value: unknown, includeNullAndUndefined?: boolean): boolean;
 export function isPrimitive(value: unknown, includeNullAndUndefined = true): boolean {
-  if (value === null || value === undefined) return includeNullAndUndefined;
-  return typeof value !== 'object' && typeof value !== 'function';
+    if (value === null || value === undefined) return includeNullAndUndefined;
+    return typeof value !== 'object' && typeof value !== 'function';
 }
 
 /**
@@ -28,8 +28,8 @@ export function isPrimitive(value: unknown, includeNullAndUndefined = true): boo
  * @returns `true` for a non-empty array of primitives; `false` for an empty array and for other values.
  */
 export const isArrayOfPrimitives = (value: unknown, includeNullAndUndefined = true): boolean => {
-  if (!Array.isArray(value)) return false;
-  return value.length > 0 && value.every((item) => isPrimitive(item, includeNullAndUndefined));
+    if (!Array.isArray(value)) return false;
+    return value.length > 0 && value.every((item) => isPrimitive(item, includeNullAndUndefined));
 };
 
 /**
@@ -39,7 +39,7 @@ export const isArrayOfPrimitives = (value: unknown, includeNullAndUndefined = tr
  * @returns `true` for non-null objects that are not arrays.
  */
 export const isObject = (value: unknown): value is object =>
-  typeof value === 'object' && !Array.isArray(value) && value !== null;
+    typeof value === 'object' && !Array.isArray(value) && value !== null;
 
 /**
  * Checks whether a value is a plain object: created by an object literal, `new Object()` or
@@ -49,16 +49,16 @@ export const isObject = (value: unknown): value is object =>
  * @returns `true` for plain objects; `false` for class instances, arrays, dates and other values.
  */
 export const isPlainObject = (value: unknown): value is Record<string, unknown> => {
-  if (value === null || typeof value !== 'object') {
-    return false;
-  }
+    if (value === null || typeof value !== 'object') {
+        return false;
+    }
 
-  const proto: unknown = Object.getPrototypeOf(value);
-  if (proto !== Object.prototype && proto !== null) {
-    return false;
-  }
+    const proto: unknown = Object.getPrototypeOf(value);
+    if (proto !== Object.prototype && proto !== null) {
+        return false;
+    }
 
-  return Object.prototype.toString.call(value) === '[object Object]';
+    return Object.prototype.toString.call(value) === '[object Object]';
 };
 
 /**
@@ -68,4 +68,4 @@ export const isPlainObject = (value: unknown): value is Record<string, unknown> 
  * @returns `true` for strings and numbers.
  */
 export const isStringOrNumber = (value: unknown): value is string | number =>
-  typeof value === 'string' || typeof value === 'number';
+    typeof value === 'string' || typeof value === 'number';

@@ -13,32 +13,32 @@ import * as redis from './redis/index.js';
 const subpathModules = { arrays, dates, io, math, objects, regex, strings, variables };
 
 describe('main entry point', () => {
-  it('exports every function of each environment-neutral subpath module under the same name', () => {
-    for (const [moduleName, moduleExports] of Object.entries(subpathModules)) {
-      for (const [name, value] of Object.entries(moduleExports)) {
-        expect({ moduleName, name, same: (root as Record<string, unknown>)[name] === value }).toEqual({
-          moduleName,
-          name,
-          same: true,
-        });
-      }
-    }
-  });
+    it('exports every function of each environment-neutral subpath module under the same name', () => {
+        for (const [moduleName, moduleExports] of Object.entries(subpathModules)) {
+            for (const [name, value] of Object.entries(moduleExports)) {
+                expect({ moduleName, name, same: (root as Record<string, unknown>)[name] === value }).toEqual({
+                    moduleName,
+                    name,
+                    same: true,
+                });
+            }
+        }
+    });
 
-  it('exports nothing besides the subpath modules', () => {
-    const expected = new Set(Object.values(subpathModules).flatMap((moduleExports) => Object.keys(moduleExports)));
-    expect(new Set(Object.keys(root))).toEqual(expected);
-  });
+    it('exports nothing besides the subpath modules', () => {
+        const expected = new Set(Object.values(subpathModules).flatMap((moduleExports) => Object.keys(moduleExports)));
+        expect(new Set(Object.keys(root))).toEqual(expected);
+    });
 
-  it('does not export the redis module', () => {
-    for (const name of Object.keys(redis)) {
-      expect(Object.keys(root)).not.toContain(name);
-    }
-  });
+    it('does not export the redis module', () => {
+        for (const name of Object.keys(redis)) {
+            expect(Object.keys(root)).not.toContain(name);
+        }
+    });
 
-  it('does not export the former namespaces', () => {
-    for (const name of ['dates', 'numbers', 'objects', 'strings', 'types', 'variables']) {
-      expect(Object.keys(root)).not.toContain(name);
-    }
-  });
+    it('does not export the former namespaces', () => {
+        for (const name of ['dates', 'numbers', 'objects', 'strings', 'types', 'variables']) {
+            expect(Object.keys(root)).not.toContain(name);
+        }
+    });
 });
