@@ -4,8 +4,10 @@ Helper functions shared by mielk applications: arrays, objects, strings, numbers
 type checks and a shared Redis client. The library is written in TypeScript and published to npm as an ES module
 with type declarations.
 
-The package was published as `mielk-fn` up to version 1.2.6; that name is deprecated. Version 2.0.0 and later are
-published only as `@mielk/fn` (repository `mielk-fn`); see [CHANGELOG.md](CHANGELOG.md) for the migration.
+Versions up to 1.2.6 were published as `mielk-fn`. The next major version, 2.0.0, is planned as the first release
+under the name `@mielk/fn` (repository `mielk-fn`); until it is published, the npm registry has only `mielk-fn`.
+After that publication `mielk-fn` will be marked as deprecated and will get no new versions. The migration is
+described in [CHANGELOG.md](CHANGELOG.md).
 
 ## Requirements
 
