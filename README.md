@@ -4,10 +4,9 @@ Helper functions shared by mielk applications: arrays, objects, strings, numbers
 type checks and a shared Redis client. The library is written in TypeScript and published to npm as an ES module
 with type declarations.
 
-Versions up to 1.2.6 were published as `mielk-fn`. The next major version, 2.0.0, is planned as the first release
-under the name `@mielk/fn` (repository `mielk-fn`); until it is published, the npm registry has only `mielk-fn`.
-After that publication `mielk-fn` will be marked as deprecated and will get no new versions. The migration is
-described in [CHANGELOG.md](CHANGELOG.md).
+Versions up to 1.2.6 were published as `mielk-fn`; that package is deprecated and gets no new versions.
+Version 2.0.0 and later are published as `@mielk/fn` (repository `mielk-fn`). The migration is described in
+[CHANGELOG.md](CHANGELOG.md).
 
 ## Requirements
 
@@ -114,7 +113,9 @@ Publication: the workflow `.github/workflows/ci.yml` checks every push to `maste
 (format, lint, typecheck, tests with coverage, build, package check, `npm audit`). It publishes only when the
 user starts it by hand (`workflow_dispatch`) on the release tag `v<version>`; the tag must match `version` in
 `package.json` and point to a commit on `master`. Publication uses npm trusted publishing (OIDC); the
-repository has no npm token.
+repository has no npm token. Version 2.0.0, the first one under the new name, was published by hand, because npm
+accepts a trusted publisher only for an existing package; the trusted publisher is configured on npmjs.com right
+before the first release through the workflow, since an unused configuration expires after two days.
 
 ## Documentation scope
 
