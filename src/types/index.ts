@@ -1,4 +1,4 @@
-// Module 'types' (entry point 'mielk-fn/types'). Shared utility types (no runtime code). Environments: all.
+// Module 'types' (entry point '@mielk/fn/types'). Shared utility types (no runtime code). Environments: all.
 import type { JSONFile } from './io.js';
 import type { Range } from './math.js';
 import type { DeepPartial, ObjectPrimitives } from './objects.js';

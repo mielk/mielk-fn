@@ -1,6 +1,6 @@
 // Main entry point: every module that works in all environments, as flat named exports.
-// The same functions are also available from the subpath of each module (e.g. 'mielk-fn/arrays').
-// The 'redis' module depends on the redis client (Node.js only) and is available only from 'mielk-fn/redis'.
+// The same functions are also available from the subpath of each module (e.g. '@mielk/fn/arrays').
+// The 'redis' module depends on the redis client (Node.js only) and is available only from '@mielk/fn/redis'.
 export * from './arrays/index.js';
 export * from './dates/index.js';
 export * from './io/index.js';

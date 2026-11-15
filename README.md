@@ -1,45 +1,48 @@
-# mielk-fn
+# @mielk/fn
 
 Helper functions shared by mielk applications: arrays, objects, strings, numbers, dates, regular expressions,
 type checks and a shared Redis client. The library is written in TypeScript and published to npm as an ES module
 with type declarations.
 
+The package was published as `mielk-fn` up to version 1.2.6; that name is deprecated. Version 2.0.0 and later are
+published only as `@mielk/fn` (repository `mielk-fn`); see [CHANGELOG.md](CHANGELOG.md) for the migration.
+
 ## Requirements
 
 - Node.js 24 or later (`engines.node: >=24`); development uses the version in `.nvmrc` (24.13.0).
-- Optional peer dependency `redis` `^5`, only for the entry point `mielk-fn/redis`.
+- Optional peer dependency `redis` `^5`, only for the entry point `@mielk/fn/redis`.
 - ES modules: the package has no CommonJS build (`require` works only through dynamic `import()`).
 
 ## Installation
 
 ```bash
-npm install mielk-fn
-# only for mielk-fn/redis:
-npm install mielk-fn redis
+npm install @mielk/fn
+# only for @mielk/fn/redis:
+npm install @mielk/fn redis
 ```
 
 ## Entry points
 
-| Entry point          | Purpose                                                                                                 | Environments                   |
-| -------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `mielk-fn`           | All modules below except `redis`, as flat named exports                                                 | Node.js, browser, React Native |
-| `mielk-fn/arrays`    | `toMap`, `toIndexedArray`                                                                               | Node.js, browser, React Native |
-| `mielk-fn/dates`     | `formatDateDefault` (time zone, default Europe/Warsaw)                                                  | Node.js, browser, React Native |
-| `mielk-fn/io`        | `parseJsonFile` (content of a dynamically imported JSON module)                                         | Node.js, browser, React Native |
-| `mielk-fn/math`      | `formatWithSign`, `formatPercent`                                                                       | Node.js, browser, React Native |
-| `mielk-fn/objects`   | `invert`, `merge`, `modifyKeys`, `isNonEmptyObject`                                                     | Node.js, browser, React Native |
-| `mielk-fn/regex`     | `getCapturedNumber`                                                                                     | Node.js, browser, React Native |
-| `mielk-fn/strings`   | `capitalizeFirst`, `collapseWhitespace`                                                                 | Node.js, browser, React Native |
-| `mielk-fn/types`     | Types `JSONFile`, `Range`, `ObjectPrimitives`, `DeepPartial`                                            | all (types only)               |
-| `mielk-fn/variables` | `isObject`, `isPlainObject`, `isPrimitive`, `isStringOrNumber`, `isArrayOfPrimitives`, type `Primitive` | Node.js, browser, React Native |
-| `mielk-fn/redis`     | `getRedisClient`, `addRedisKey`, `removeRedisKey`, type `RedisConfig`                                   | Node.js only                   |
+| Entry point           | Purpose                                                                                                 | Environments                   |
+| --------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `@mielk/fn`           | All modules below except `redis`, as flat named exports                                                 | Node.js, browser, React Native |
+| `@mielk/fn/arrays`    | `toMap`, `toIndexedArray`                                                                               | Node.js, browser, React Native |
+| `@mielk/fn/dates`     | `formatDateDefault` (time zone, default Europe/Warsaw)                                                  | Node.js, browser, React Native |
+| `@mielk/fn/io`        | `parseJsonFile` (content of a dynamically imported JSON module)                                         | Node.js, browser, React Native |
+| `@mielk/fn/math`      | `formatWithSign`, `formatPercent`                                                                       | Node.js, browser, React Native |
+| `@mielk/fn/objects`   | `invert`, `merge`, `modifyKeys`, `isNonEmptyObject`                                                     | Node.js, browser, React Native |
+| `@mielk/fn/regex`     | `getCapturedNumber`                                                                                     | Node.js, browser, React Native |
+| `@mielk/fn/strings`   | `capitalizeFirst`, `collapseWhitespace`                                                                 | Node.js, browser, React Native |
+| `@mielk/fn/types`     | Types `JSONFile`, `Range`, `ObjectPrimitives`, `DeepPartial`                                            | all (types only)               |
+| `@mielk/fn/variables` | `isObject`, `isPlainObject`, `isPrimitive`, `isStringOrNumber`, `isArrayOfPrimitives`, type `Primitive` | Node.js, browser, React Native |
+| `@mielk/fn/redis`     | `getRedisClient`, `addRedisKey`, `removeRedisKey`, type `RedisConfig`                                   | Node.js only                   |
 
 Each function is documented with TSDoc in the source; editors show the description, parameters and errors.
 
 ## Usage
 
 ```ts
-import { formatPercent, invert, toMap } from 'mielk-fn';
+import { formatPercent, invert, toMap } from '@mielk/fn';
 
 const byId = toMap(users, (user) => user.id);
 const codes = invert({ pl: 'Polish', en: 'English' }); // { Polish: 'pl', English: 'en' }
@@ -47,7 +50,7 @@ formatPercent(0.1234, 1); // '12.3%'
 ```
 
 ```ts
-import { addRedisKey, getRedisClient } from 'mielk-fn/redis';
+import { addRedisKey, getRedisClient } from '@mielk/fn/redis';
 
 // Configure the shared client once, at application start-up.
 await getRedisClient({ host: 'redis.local', port: 6379, password: secret, onError: (error) => logger.error(error) });
@@ -62,7 +65,7 @@ The first call creates the single client of the process; later calls may omit th
 
 ## Side effects
 
-- Only `mielk-fn/redis` uses the network: it opens one connection to the Redis server on the first
+- Only `@mielk/fn/redis` uses the network: it opens one connection to the Redis server on the first
   `getRedisClient` call, and `addRedisKey` / `removeRedisKey` write and delete keys on that server.
 - No module writes to the console, to files or changes global state when imported (`sideEffects: false`).
 - `formatDateDefault` keeps a cache of `Intl.DateTimeFormat` objects per time zone in memory.
@@ -94,7 +97,7 @@ Other functions do not throw for documented inputs; type checks return `false` f
 | `npm run lint`                            | ESLint with type information, no warnings allowed                                                                           |
 | `npm run format` / `npm run format:check` | Prettier                                                                                                                    |
 | `npm run build`                           | compiles `src` to `dist` (clears the content of `dist`, keeps the folder)                                                   |
-| `npm run check:package`                   | `publint --strict` and `attw` on the built package                                                                          |
+| `npm run check:package`                   | `publint --strict`, `attw` and the file list of `npm pack` (only `dist`, README, LICENSE, CHANGELOG) on the built package   |
 
 `prepublishOnly` runs typecheck, lint, tests, build and the package check.
 Unit tests do not connect to Redis: the `redis` module is replaced by a test double.
@@ -104,6 +107,12 @@ Unit tests do not connect to Redis: the `redis` module is replaced by a test dou
 Changes are listed by hand in [CHANGELOG.md](CHANGELOG.md) under `Unreleased`; it also holds the migration notes
 between major versions. `npm version <major|minor|patch>` moves the entries to the new version
 (`scripts/release-changelog.ts`, run by Node.js directly) and creates the release commit and tag.
+
+Publication: the workflow `.github/workflows/ci.yml` checks every push to `master` and every pull request
+(format, lint, typecheck, tests with coverage, build, package check, `npm audit`). It publishes only when the
+user starts it by hand (`workflow_dispatch`) on the release tag `v<version>`; the tag must match `version` in
+`package.json` and point to a commit on `master`. Publication uses npm trusted publishing (OIDC); the
+repository has no npm token.
 
 ## Documentation scope
 

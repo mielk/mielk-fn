@@ -1,5 +1,5 @@
 {
-    "name": "mielk-fn",
+    "name": "@mielk/fn",
     "version": "1.2.6",
     "keywords": [],
     "author": "mielk",
@@ -78,10 +78,13 @@
         "format:check": "prettier --check .",
         "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:package",
         "dev": "tsc -p tsconfig.build.json --watch",
-        "check:package": "publint --strict && attw --pack . --profile esm-only",
+        "check:package": "publint --strict && attw --pack . --profile esm-only && npm pack --dry-run --json | node scripts/check-pack-files.ts",
         "version": "node scripts/release-changelog.ts && git add CHANGELOG.md"
     },
     "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/mielk/mielk-fn.git"
