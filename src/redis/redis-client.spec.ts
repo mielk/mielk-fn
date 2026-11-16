@@ -88,6 +88,7 @@ describe('getRedisClient', () => {
         const error: unknown = await getRedisClient({ host: 'other.local' }).catch((e: unknown) => e);
         expect(error).toBeInstanceOf(RedisConfigConflictError);
         expect(error).toBeInstanceOf(Error);
+        // The cast is safe: the toBeInstanceOf(RedisConfigConflictError) assertion above fails the test otherwise.
         const conflict = error as InstanceType<typeof RedisConfigConflictError>;
         expect(conflict.code).toBe('REDIS_CONFIG_CONFLICT');
         expect(REDIS_CONFIG_CONFLICT).toBe('REDIS_CONFIG_CONFLICT');

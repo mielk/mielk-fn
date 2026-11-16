@@ -34,6 +34,9 @@ export class RedisConfigConflictError extends Error {
     /** Always {@link REDIS_CONFIG_CONFLICT}. */
     readonly code = REDIS_CONFIG_CONFLICT;
 
+    /**
+     * @param message - Error message describing the configuration conflict.
+     */
     constructor(message: string) {
         super(message);
         this.name = 'RedisConfigConflictError';
