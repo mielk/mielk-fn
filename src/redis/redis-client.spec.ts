@@ -82,6 +82,28 @@ describe('getRedisClient', () => {
         await expect(getRedisClient({ onError: vi.fn() })).rejects.toThrow(/different configuration/);
     });
 
+    it('throws RedisConfigConflictError with code REDIS_CONFIG_CONFLICT on a conflict', async () => {
+        const { getRedisClient, RedisConfigConflictError, REDIS_CONFIG_CONFLICT } = await loadModule();
+        await getRedisClient({ host: 'redis.local' });
+        const error: unknown = await getRedisClient({ host: 'other.local' }).catch((e: unknown) => e);
+        expect(error).toBeInstanceOf(RedisConfigConflictError);
+        expect(error).toBeInstanceOf(Error);
+        const conflict = error as InstanceType<typeof RedisConfigConflictError>;
+        expect(conflict.code).toBe('REDIS_CONFIG_CONFLICT');
+        expect(REDIS_CONFIG_CONFLICT).toBe('REDIS_CONFIG_CONFLICT');
+        expect(conflict.name).toBe('RedisConfigConflictError');
+        expect(conflict.message).toBe(
+            'The Redis client already exists with a different configuration (redis.local:6379).',
+        );
+    });
+
+    it('does not throw RedisConfigConflictError for other errors', async () => {
+        const { getRedisClient, RedisConfigConflictError } = await loadModule();
+        fakeClient.connect.mockRejectedValueOnce(new Error('ECONNREFUSED'));
+        const error: unknown = await getRedisClient().catch((e: unknown) => e);
+        expect(error).not.toBeInstanceOf(RedisConfigConflictError);
+    });
+
     it('connects only once when called in parallel', async () => {
         const { getRedisClient } = await loadModule();
         const [first, second] = await Promise.all([getRedisClient(), getRedisClient()]);
