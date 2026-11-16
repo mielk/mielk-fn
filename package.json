@@ -90,9 +90,10 @@
         "url": "git+https://github.com/mielk/mielk-fn.git"
     },
     "homepage": "https://github.com/mielk/mielk-fn#readme",
+    "prettier": "@mielk/lib-config/prettier",
     "devDependencies": {
         "@arethetypeswrong/cli": "0.18.5",
-        "@eslint/js": "10.0.1",
+        "@mielk/lib-config": "2.0.0",
         "@types/node": "24.19.2",
         "@vitest/coverage-v8": "5.1.0",
         "eslint": "10.15.0",
@@ -100,7 +101,6 @@
         "publint": "0.3.25",
         "redis": "5.11.0",
         "typescript": "5.9.2",
-        "typescript-eslint": "8.73.0",
         "vitest": "5.1.0"
     },
     "files": [
