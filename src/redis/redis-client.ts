@@ -17,6 +17,34 @@ export type RedisConfig = {
     onError?: (error: Error) => void;
 };
 
+/**
+ * Value of {@link RedisConfigConflictError.code}.
+ *
+ * @since 2.1.0
+ */
+export const REDIS_CONFIG_CONFLICT = 'REDIS_CONFIG_CONFLICT';
+
+/**
+ * Thrown by {@link getRedisClient} when a later call passes a configuration different from the one of the
+ * existing client. Callers tell it from other errors by `instanceof` or by `code`, not by the message.
+ *
+ * @since 2.1.0
+ */
+export class RedisConfigConflictError extends Error {
+    /** Always {@link REDIS_CONFIG_CONFLICT}. */
+    readonly code = REDIS_CONFIG_CONFLICT;
+
+    /**
+     * Creates the error for a Redis configuration conflict.
+     *
+     * @param message - Error message describing the configuration conflict.
+     */
+    constructor(message: string) {
+        super(message);
+        this.name = 'RedisConfigConflictError';
+    }
+}
+
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 6379;
 
@@ -72,7 +100,7 @@ const startConnecting = (client: RedisClientType): Promise<RedisClientType> => {
  *
  * @param config Connection settings; used only by the call that creates the client.
  * @returns The connected client.
- * @throws Error when a later call passes settings different from those of the existing client.
+ * @throws {RedisConfigConflictError} (`code` `REDIS_CONFIG_CONFLICT`) when a later call passes settings different from those of the existing client.
  * @throws The error of `connect()` when the connection cannot be opened.
  */
 export const getRedisClient = async (config?: RedisConfig): Promise<RedisClientType> => {
@@ -81,7 +109,7 @@ export const getRedisClient = async (config?: RedisConfig): Promise<RedisClientT
         activeConfig = requested;
         redisClient = createRedisClient(requested);
     } else if (config !== undefined && !isSameConfig(activeConfig, requested)) {
-        throw new Error(
+        throw new RedisConfigConflictError(
             `The Redis client already exists with a different configuration (${activeConfig.host}:${String(activeConfig.port)}).`,
         );
     }

@@ -24,19 +24,19 @@ npm install @mielk/fn redis
 
 ## Entry points
 
-| Entry point           | Purpose                                                                                                 | Environments                   |
-| --------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `@mielk/fn`           | All modules below except `redis`, as flat named exports                                                 | Node.js, browser, React Native |
-| `@mielk/fn/arrays`    | `toMap`, `toIndexedArray`                                                                               | Node.js, browser, React Native |
-| `@mielk/fn/dates`     | `formatDateDefault` (time zone, default Europe/Warsaw)                                                  | Node.js, browser, React Native |
-| `@mielk/fn/io`        | `parseJsonFile` (content of a dynamically imported JSON module)                                         | Node.js, browser, React Native |
-| `@mielk/fn/math`      | `formatWithSign`, `formatPercent`                                                                       | Node.js, browser, React Native |
-| `@mielk/fn/objects`   | `invert`, `merge`, `modifyKeys`, `isNonEmptyObject`                                                     | Node.js, browser, React Native |
-| `@mielk/fn/regex`     | `getCapturedNumber`                                                                                     | Node.js, browser, React Native |
-| `@mielk/fn/strings`   | `capitalizeFirst`, `collapseWhitespace`                                                                 | Node.js, browser, React Native |
-| `@mielk/fn/types`     | Types `JSONFile`, `Range`, `ObjectPrimitives`, `DeepPartial`                                            | all (types only)               |
-| `@mielk/fn/variables` | `isObject`, `isPlainObject`, `isPrimitive`, `isStringOrNumber`, `isArrayOfPrimitives`, type `Primitive` | Node.js, browser, React Native |
-| `@mielk/fn/redis`     | `getRedisClient`, `addRedisKey`, `removeRedisKey`, type `RedisConfig`                                   | Node.js only                   |
+| Entry point           | Purpose                                                                                                                    | Environments                   |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `@mielk/fn`           | All modules below except `redis`, as flat named exports                                                                    | Node.js, browser, React Native |
+| `@mielk/fn/arrays`    | `toMap`, `toIndexedArray`                                                                                                  | Node.js, browser, React Native |
+| `@mielk/fn/dates`     | `formatDateDefault` (time zone, default Europe/Warsaw)                                                                     | Node.js, browser, React Native |
+| `@mielk/fn/io`        | `parseJsonFile` (content of a dynamically imported JSON module)                                                            | Node.js, browser, React Native |
+| `@mielk/fn/math`      | `formatWithSign`, `formatPercent`                                                                                          | Node.js, browser, React Native |
+| `@mielk/fn/objects`   | `invert`, `merge`, `modifyKeys`, `isNonEmptyObject`                                                                        | Node.js, browser, React Native |
+| `@mielk/fn/regex`     | `getCapturedNumber`                                                                                                        | Node.js, browser, React Native |
+| `@mielk/fn/strings`   | `capitalizeFirst`, `collapseWhitespace`                                                                                    | Node.js, browser, React Native |
+| `@mielk/fn/types`     | Types `JSONFile`, `Range`, `ObjectPrimitives`, `DeepPartial`                                                               | all (types only)               |
+| `@mielk/fn/variables` | `isObject`, `isPlainObject`, `isPrimitive`, `isStringOrNumber`, `isArrayOfPrimitives`, type `Primitive`                    | Node.js, browser, React Native |
+| `@mielk/fn/redis`     | `getRedisClient`, `addRedisKey`, `removeRedisKey`, `RedisConfigConflictError`, `REDIS_CONFIG_CONFLICT`, type `RedisConfig` | Node.js only                   |
 
 Each function is documented with TSDoc in the source; editors show the description, parameters and errors.
 
@@ -63,6 +63,7 @@ await addRedisKey('session:42', { userId: 7 }, 3600);
 The library reads no environment variables and no files; configuration is passed as parameters.
 `getRedisClient(config)` takes `host` (default `127.0.0.1`), `port` (default `6379`), `password` and `onError`.
 The first call creates the single client of the process; later calls may omit the configuration.
+A later call with a different configuration throws `RedisConfigConflictError` (an `Error` with `code` `REDIS_CONFIG_CONFLICT`); check it with `instanceof` or `error.code`, not by the message.
 
 ## Side effects
 
@@ -81,7 +82,7 @@ The first call creates the single client of the process; later calls may omit th
 | `getCapturedNumber`                               | `SyntaxError`               | `pattern` is a string that is not a valid regular expression                                                                  |
 | `invert`                                          | `Error`                     | the input is not an object, a value is neither a string nor a number, or a value repeats and `ignoreDuplicatedKey` is `false` |
 | `modifyKeys`                                      | `TypeError`                 | the input is not a plain object                                                                                               |
-| `getRedisClient`                                  | `Error`                     | a later call passes a configuration different from the existing client                                                        |
+| `getRedisClient`                                  | `RedisConfigConflictError`  | a later call passes a configuration different from the existing client; `code` is `REDIS_CONFIG_CONFLICT` (since 2.1.0)       |
 | `getRedisClient`, `addRedisKey`, `removeRedisKey` | error of the `redis` client | the connection cannot be opened or a command fails                                                                            |
 | `addRedisKey`                                     | `TypeError`                 | `content` cannot be serialised by `JSON.stringify` (circular reference, `bigint`); nothing is sent to Redis                   |
 
