@@ -1,6 +1,6 @@
 {
     "name": "@mielk/fn",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "keywords": [],
     "author": "mielk",
     "description": "Helper functions for arrays, objects, strings, numbers, dates and Redis shared by mielk applications.",
