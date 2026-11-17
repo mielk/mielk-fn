@@ -52,4 +52,5 @@ jobs:
                   git merge-base --is-ancestor "$GITHUB_SHA" origin/master || { echo "The tagged commit is not on master."; exit 1; }
             - run: npm ci
             # prepublishOnly repeats typecheck, lint, tests, build and the package check before the upload.
-            - run: npm publish
+            # Trusted publishing (OIDC) signs and attaches provenance; --provenance makes the run fail instead of publishing without it.
+            - run: npm publish --provenance
